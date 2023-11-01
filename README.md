@@ -8,7 +8,7 @@ Sovelluksessa näkyy käyttäjän ostoksia ja tulevia ostosuunnitelmia, joista l
 - Käyttäjä voi kirjautua sisään ja ulos, sekä luoda uuden käyttäjän
 - Käyttäjä voi päättää mitä budjetoinnin alueita hän käyttää ja mitä ei (Esim. jos ei ole autoa, tähän liittyvää osuutta ei ole aina turhaan näkyvillä). Voi siis esim. käyttää ainoastaan ruokaostoksien tai ns. "ylimääräisten" ostoksien seuraamiseen.
 - Käyttäjä voi laittaa tietoja ostoksistaan yksityiskohtaisia tietoja ja lisätä myös myöhemmin kommentteja näihin liittyen. Voi tehdä näistä myös toistuvia (esim. vuokraa ei tarvitse aina lisätä uudestaan)
-- Käyttäjä voi myös tehdä kirjauksia asioista, mitä saatetaan ostaa tulevaisuudessa. Olkoon esim. lahjoja, "ylimääräistä" hauskaa tai tarpeellisia asioita.
+- Käyttäjä voi myös tehdä kirjauksia asioista, mitä saatetaan ostaa tulevaisuudessa. Olkoon esim. lahjoja, "ylimääräistä" hauskaa tai tarpeellisia asioita. Ja nähdä miten nämä vaikuttaisivat tulevan ajan budjetointiin tai voi myös olla vain "idea" ilman mitään vaikutusta.
 - Käyttäjä voi nähdä näistä kaikista asioista jonkinlaisen yhteenvedon.
 - Käyttäjä voi helposti etsiä ja muokata tehtyjä kirjauksia.
 
