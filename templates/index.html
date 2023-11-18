@@ -1,0 +1,6 @@
+{% if session.user_id %}
+<p>Olet kirjautunut nimellä {{ message }}</p>
+<a href="/logout">Kirjaudu ulos</a>
+{% else %}
+<a href="/login">Kirjaudu sisään</a>
+{% endif %}
