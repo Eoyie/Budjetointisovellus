@@ -3,7 +3,7 @@
 {% block content %}
 {% if session.user_id %}
 <h3>Lisää kategoria</h3><br>
-<form action="/settings" method="post">
+<form action="/settings" method="post" onsubmit="return check(this)">
     Kategorian nimi: <input type="text" name="name" required>
     <input type="submit" value="Lisää Kategoria">
     </form>
@@ -14,4 +14,13 @@
     <li>{{ category.name }}
 {% endfor %}
 </ul>
+<script>
+    function check(form) {
+        if (form.name.value.length > 20) {
+            alert("Kategorian nimi on liian pitkä");
+            return false;
+        }
+        return true;
+    }
+    </script>
 {% endif %}{% endblock %}

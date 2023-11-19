@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block title %}Etusivu{% endblock %}
 {% block content %}
-<form action="/register" method="post">
+<form action="/register" method="post" onsubmit="return check(this)">
     Tunnus: <input type="text" name="username" required>
     <p>
     Salasana: <input type="password" name="password1" required>
@@ -10,4 +10,21 @@
     <p>
     <input type="submit" value="Luo tunnus">
     </form>
+<script>
+    function check(form) {
+        if (form.username.value.length > 20) {
+            alert("Tunnus on liian pitkä");
+            return false;
+        }
+        if (form.password1.value.length > 20) {
+            alert("Salasana on liian pitkä");
+            return false;
+        }
+        if (form.password2.value.length > 20) {
+            alert("Salasana on liian pitkä");
+            return false;
+        }
+        return true;
+    }
+    </script>
 {% endblock %}

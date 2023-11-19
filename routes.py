@@ -5,18 +5,21 @@ import users, categories, expences
 @app.route("/")
 def index():
     if session.get("logged_in") == True:
-        username = users.username(session.get("user_id"))
-        user_expences = expences.get_all_expences(session.get("user_id"))
-        return render_template("home.html", message=username, expences=user_expences)
+        user_id = session.get("user_id")
+        username = users.username(user_id)
+        user_expences = expences.get_all_expences(user_id)
+        expences_sum = expences.get_sum_expences(user_id)
+        return render_template("home.html", message=username, expences=user_expences, expences_sum=expences_sum)
     return render_template("index.html")
 
 @app.route("/home")
 def home():
     if session.get("logged_in") == True:
-        username = users.username(session.get("user_id"))
-        user_expences = expences.get_all_expences(session.get("user_id"))
-        print(user_expences)
-        return render_template("home.html", message=username, expences=user_expences)
+        user_id = session.get("user_id")
+        username = users.username(user_id)
+        user_expences = expences.get_all_expences(user_id)
+        expences_sum = expences.get_sum_expences(user_id)
+        return render_template("home.html", message=username, expences=user_expences, expences_sum=expences_sum)
     return render_template("error.html", message="Et ole kirjautunut sisään!")
 
 @app.route("/login", methods=["GET", "POST"])

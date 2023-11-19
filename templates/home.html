@@ -6,12 +6,14 @@
 <ul>
     <li><a href="/new_expence">Lisää meno</a>
 </ul>
+{% if expences_sum %}
 <h3>Sinun menosi:</h3><br>
 <ul>
 {% for expence in expences %}
     <li>{{ expence.name }}, {{ expence.price }}, {{ expence.date }}, {{ expence.notes }}
 {% endfor %}
 </ul>
+Menojesi summa: {{ expences_sum }}{% endif %}
 {% else %}
 Et ole kirjautunut sisään!
 {% endif %}{% endblock %}

@@ -2,7 +2,7 @@
 {% block title %}Etusivu{% endblock %}
 {% block content %}
 {% if session.user_id %}
-<form action="/new_expence" method="post">
+<form action="/new_expence" method="post" onsubmit="return check(this)">
     <p>Nimi:<br>
     <input type="text" name="name" required></p>
     <p>Hinta:<br>
@@ -20,5 +20,22 @@
     </textarea></p>
     <input type="submit" value="Lähetä">
     </form>
+    <script>
+        function check(form) {
+            if (form.name.value.length > 20) {
+                alert("Menon nimi on liian pitkä");
+                return false;
+            }
+            if (form.price.value.length > 20) {
+                alert("Hinta on liian suuri");
+                return false;
+            }
+            if (form.notes.value.length > 100) {
+                alert("Lisätiedot on liian pitkä");
+                return false;
+            }
+            return true;
+        }
+    </script>
 {% endif %}
 {% endblock %}
