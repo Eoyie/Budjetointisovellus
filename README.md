@@ -1,8 +1,8 @@
 # Budjetointisovellus
 
-## Välipalautus 2
+### Välipalautus 2
 
-### Sovelluksen nykyinen tilanne
+## Sovelluksen nykyinen tilanne
 Sovelluksessa pitäisi toimia:
 - Käyttäjän luominen ja kirjautuminen
 - Yksinkertaisten meno kategorioiden lisääminen
@@ -15,43 +15,49 @@ Muita kommentteja ja tunnettuja ongelmia:
 - Kategorioiden paikka asetuksissa hieman outo, en ole vielä päättänyt missä näitä lisätään. Asetuksissa ei vielä mitään, mutta suunnittelisin esim. grouping sääntöjä (siis miten menoja esitetään ruudulla)
 - **Ei ole vielä ylläpitäjiä ym. vielä hyvin yksinkertainen ohjelman pohja!!!**
  
-### Miten pystyy käynnistää
+## Miten pystyy käynnistää
 **Sovellus ei ole testattavissa Fly.iossa!**
 Tässä on siis ohjeet sovelluksen käynnistämiseen paikallisesti:
 
 Kloonaa repositorio omalle koneellesi ja siirry sen juurikansioon. Luo kansioon oma .env-tiedosto ja määritä sen sisältö näin:
-
+ 
 ```
 DATABASE_URL=<tietokannan-paikallinen-osoite>
 SECRET_KEY=<salainen-avain>
 ```
-
-- <tietokannan-paikallinen-osoite> eli postgresql:///user, jossa user on käytettävän tietokannan nimi (ja tämä näkyy myös PostgreSQL-tulkissa rivien alussa)
-- <salainen-avain> eli esim. Pythonilla luotu salainen avain:
+ 
+- *tietokannan-paikallinen-osoite* eli postgresql:///user, jossa user on käytettävän tietokannan nimi (ja tämä näkyy myös PostgreSQL-tulkissa rivien alussa)
+- *salainen-avain* eli esim. Pythonilla luotu salainen avain:
+ 
 ```
   $ python3
 >>> import secrets
 >>> secrets.token_hex(16)
 ```
-
+ 
 Aktivoi virtuaaliympäristö ja asenna sovelluksen riippuvuudet komennoilla:
-
+ 
 ```
 $ python3 -m venv venv
 $ source venv/bin/activate
 $ pip install -r ./requirements.txt
 ```
+ 
 Muista käynnistää oma PostgreSQL-tulkki! Tähän on ohje [asennusskriptin sivuilla](https://github.com/hy-tsoha/local-pg). Määritä tämän jälkeen tietokannan skeema komennolla:
+ 
 ```
 $ psql < schema.sql
 ```
+ 
 Tai manuaalisesti psql PostgreSQL-tulkissa!
-
+ 
 Nyt voit käynnistää sovelluksen komennolla ja avata annetun linkin, josta pääsee sovellukseen.
+ 
 ```
 $ flask run
 ```
-## Välipalautus 1
+##
+### Välipalautus 1
 
 En ole vielä täysin varma tarkasta laajuudesta, mutta pääideana olisi tehdä sovellus omien tehtyjen ja mahdollisesti tulevien ostoksien budjetoinnista. Tämä tulisi olla yleisesti mukavampi ja interaktiivisempi, kuin ns. perinteinen excel-taulukko, jota usein käytetään budjetointiin. Siis vielä enemmän idea on erotella ns. turhia, pakollisia ja hupi ostoksia vain yksinkertaisen "mihin meni rahaa" sijaan.
 
