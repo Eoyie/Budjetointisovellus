@@ -1,21 +1,24 @@
-{% extends "layout.html" %}
+{% extends "logged_in_layout.html" %}
 {% block title %}Etusivu{% endblock %}
 {% block content %}
 {% if session.user_id %}
 <form action="/new_expence" method="post">
-    Kategoria:
-    <p><select name="lang">
-    <option value="fi" selected> suomi
-    <option value="sv"> ruotsi
-    <option value="en"> englanti
-    </select></p>
+    <p>Nimi:<br>
+    <input type="text" name="name" required></p>
     <p>Hinta:<br>
-    <input type="text" name="amount"></p>
+    <input type="text" name="price" required></p>
+    <p>Päivämäärä:
+    <input type="date" name="date" required> <br>
+    Kategoria:
+    <p><select name="category">
+    {% for category in categories %}
+    <option value="{{ category.id }}"> {{ category.name }}
+    {% endfor %}
+    </select></p>
     <p>Lisätietoja:<br>
-    <textarea name="message" rows="3" cols="40">
+    <textarea name="notes" rows="3" cols="40">
     </textarea></p>
     <input type="submit" value="Lähetä">
-
     </form>
 {% endif %}
 {% endblock %}

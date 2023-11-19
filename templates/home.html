@@ -5,7 +5,12 @@
 <p>Hei {{ message }}!</p>
 <ul>
     <li><a href="/new_expence">Lisää meno</a>
-    <li><a href="/expences">Tarkastele menoja</a>
+</ul>
+<h3>Sinun menosi:</h3><br>
+<ul>
+{% for expence in expences %}
+    <li>{{ expence.name }}, {{ expence.price }}, {{ expence.date }}, {{ expence.notes }}
+{% endfor %}
 </ul>
 {% else %}
 Et ole kirjautunut sisään!

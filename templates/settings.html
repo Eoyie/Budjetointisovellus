@@ -4,7 +4,7 @@
 {% if session.user_id %}
 <h3>Lisää kategoria</h3><br>
 <form action="/settings" method="post">
-    Kategorian nimi: <input type="text" name="name">
+    Kategorian nimi: <input type="text" name="name" required>
     <input type="submit" value="Lisää Kategoria">
     </form>
 <hr>
