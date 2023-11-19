@@ -1,17 +1,21 @@
+{% extends "layout.html" %}
+{% block title %}Etusivu{% endblock %}
+{% block content %}
 {% if session.user_id %}
-<form action="/register" method="post">
-    Kieli:
-    <select name="lang">
+<form action="/new_expence" method="post">
+    Kategoria:
+    <p><select name="lang">
     <option value="fi" selected> suomi
     <option value="sv"> ruotsi
     <option value="en"> englanti
-    </select><br>
-    Viesti:
-    <textarea name="message" rows="3" cols="40"><br>
-    </textarea> <br>
-    Kieli: <br>
-    <input type="radio" name="lang" value="fi" checked> suomi
-    <input type="radio" name="lang" value="sv"> ruotsi<br>
-    <input type="submit" value="Lähetä"><br>
+    </select></p>
+    <p>Hinta:<br>
+    <input type="text" name="amount"></p>
+    <p>Lisätietoja:<br>
+    <textarea name="message" rows="3" cols="40">
+    </textarea></p>
+    <input type="submit" value="Lähetä">
+
     </form>
 {% endif %}
+{% endblock %}

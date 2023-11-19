@@ -1,0 +1,12 @@
+{% extends "logged_in_layout.html" %}
+{% block title %}Etusivu{% endblock %}
+{% block content %}
+{% if session.user_id %}
+<p>Hei {{ message }}!</p>
+<ul>
+    <li><a href="/new_expence">Lisää meno</a>
+    <li><a href="/expences">Tarkastele menoja</a>
+</ul>
+{% else %}
+Et ole kirjautunut sisään!
+{% endif %}{% endblock %}

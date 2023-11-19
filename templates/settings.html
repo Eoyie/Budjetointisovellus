@@ -1,0 +1,17 @@
+{% extends "logged_in_layout.html" %}
+{% block title %}Etusivu{% endblock %}
+{% block content %}
+{% if session.user_id %}
+<h3>Lisää kategoria</h3><br>
+<form action="/settings" method="post">
+    Kategorian nimi: <input type="text" name="name">
+    <input type="submit" value="Lisää Kategoria">
+    </form>
+<hr>
+<h3>Sinun kategoriat:</h3><br>
+<ul>
+{% for category in categories %}
+    <li>{{ category.name }}
+{% endfor %}
+</ul>
+{% endif %}{% endblock %}
