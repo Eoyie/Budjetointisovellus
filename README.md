@@ -7,6 +7,7 @@ Sovelluksessa pitäisi toimia:
 - Käyttäjän luominen ja kirjautuminen
 - Yksinkertaisten meno kategorioiden lisääminen
 - Yksinkertaisten menojen lisääminen ja hyvin yksinkertainen yhteenveto
+- Kaikki keksimäni esteet sivujen näkymisille (Ei pysty nähdä esim. menojen lisäys sivua, jos ei ole kirjautunut) ja tietojen antamiselle on lisätty
  
 Muita kommentteja ja tunnettuja ongelmia:
 - Vain käyttäjien käyttö ja tietokanta on sinäänsä valmis. Esimerkiksi kategorioiden yhtä osuutta "grouping" ei käytetä vielä ollenkaan, koska menot vain näytetään hyvin yksinkertaisessa listassa.
