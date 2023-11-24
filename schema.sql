@@ -11,7 +11,7 @@ CREATE TABLE categories (
 CREATE TABLE expences (
     id SERIAL PRIMARY KEY, 
     name TEXT, 
-    amount INTEGER, 
+    price INTEGER, 
     category_id INTEGER REFERENCES categories, 
     date TEXT, 
     notes TEXT, 
