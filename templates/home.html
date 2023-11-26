@@ -8,11 +8,12 @@
 </ul>
 {% if expences_sum %}
 <h3>Sinun menosi:</h3><br>
-<ul>
+<div style="background:goldenrod;padding:10px;width:200px">
 {% for expence in expences %}
-    <li>{{ expence.name }}, {{ expence.price }}, {{ expence.date }}, {{ expence.notes }}
+{{ expence.name }} [{{ expence.price }}]<br>
+{{ expence.date }}<br><hr>
 {% endfor %}
-</ul>
+</div>
 Menojesi summa: {{ expences_sum }}{% endif %}
 {% else %}
 Et ole kirjautunut sisään!
