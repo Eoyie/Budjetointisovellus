@@ -72,13 +72,12 @@ def new_expence():
         else:
             return render_template("error.html", message="Lisää ensin kategoria asetuksista")
     if request.method == "POST":
-        name = request.form["name"]
         price = request.form["price"]
         date = request.form["date"]
         category_id  = request.form["category"]
         notes = request.form["notes"]
         print(date)
-        if expences.add_expence(name, price, category_id, date, notes, session.get("user_id")):
+        if expences.add_expence(price, category_id, date, notes, session.get("user_id")):
             return redirect("/home")
         else:
             return render_template("error.html", message="Menon lisääminen ei onnistunut")

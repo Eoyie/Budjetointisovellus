@@ -3,9 +3,10 @@ from flask import session
 from sqlalchemy.sql import text
 
 def add_category(name, user_id):
+    visible = True
     try:
-        sql = text("INSERT INTO categories (name,user_id) VALUES (:name,:user_id)")
-        db.session.execute(sql, {"name":name, "user_id":user_id})
+        sql = text("INSERT INTO categories (name,user_id,visible) VALUES (:name,:user_id,:visible)")
+        db.session.execute(sql, {"name":name, "user_id":user_id, "visible":visible})
         db.session.commit()
     except:
         return False

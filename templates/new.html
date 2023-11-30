@@ -3,8 +3,6 @@
 {% block content %}
 {% if session.user_id %}
 <form action="/new_expence" method="post" onsubmit="return check(this)">
-    <p>Nimi:<br>
-    <input type="text" name="name" required></p>
     <p>Hinta:<br>
     <input type="text" name="price" required></p>
     <p>Päivämäärä:
