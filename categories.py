@@ -32,3 +32,6 @@ def get_category_id(name, user_id):
     category_id = result.fetchall()
     return category_id
         
+def group_by_categories(expence_list, user_id):
+    categories = get_all_categories(user_id)
+    print(categories, "\n", expence_list)

@@ -4,27 +4,27 @@ import users, categories, expences
 
 @app.route("/")
 def index():
-    if session.get("logged_in") == True:
+    if session.get("logged_in"):
         user_id = session.get("user_id")
         username = users.username(user_id)
-        user_expences = expences.get_all_expences(user_id)
-        expences_sum = expences.get_sum_expences(user_id)
+        user_expences = expences.get_this_month_expences_in_category_list(user_id)
+        expences_sum = expences.get_this_month_sum_expences(user_id)
         return render_template("home.html", message=username, expences=user_expences, expences_sum=expences_sum)
     return render_template("index.html")
 
 @app.route("/home")
 def home():
-    if session.get("logged_in") == True:
+    if session.get("logged_in"):
         user_id = session.get("user_id")
         username = users.username(user_id)
-        user_expences = expences.get_all_expences(user_id)
-        expences_sum = expences.get_sum_expences(user_id)
+        user_expences = expences.get_this_month_expences_in_category_list(user_id)
+        expences_sum = expences.get_this_month_sum_expences(user_id)
         return render_template("home.html", message=username, expences=user_expences, expences_sum=expences_sum)
     return render_template("error.html", message="Et ole kirjautunut sisään!")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    if session.get("logged_in") == True:
+    if session.get("logged_in"):
         username = users.username(session.get("user_id"))
         return render_template("home.html", message=username)
     if request.method == "GET":
@@ -39,13 +39,13 @@ def login():
 
 @app.route("/logout")
 def logout():
-    if session.get("logged_in") == True:
+    if session.get("logged_in"):
         users.logout()
     return redirect("/")
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    if session.get("logged_in") == True:
+    if session.get("logged_in"):
         username = users.username(session.get("user_id"))
         return render_template("home.html", message=username)
     if request.method == "GET":
@@ -63,7 +63,7 @@ def register():
 
 @app.route("/new_expence", methods=["GET", "POST"])
 def new_expence():
-    if session.get("logged_in") == False:
+    if not session.get("logged_in"):
         return render_template("error.html", message="Et ole kirjautunut sisään!")
     if request.method == "GET":
         if categories.check_categories_exist(session.get("user_id")):
@@ -84,7 +84,7 @@ def new_expence():
     
 @app.route("/settings", methods=["GET", "POST"])
 def manage_categories():
-    if session.get("logged_in") == False:
+    if not session.get("logged_in"):
         return render_template("error.html", message="Et ole kirjautunut sisään!")
     if request.method == "GET":
         user_categories = categories.get_all_categories(session.get("user_id"))

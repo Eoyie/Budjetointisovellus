@@ -13,12 +13,12 @@
     <li><a href="/new_expence">Lisää meno</a>
 </ul>
 {% if expences_sum %}
-<h3>Sinun menosi:</h3><br>
+<h3>Sinun menosi tässä kuussa:</h3><br>
 <div class="container">
 {% for expence in expences %}
-<div style="background:goldenrod;padding:10px;width:200px;">
-{{ expence.price }}<br>
-{{ expence.date }}<br><hr></div>
+<div style="background:goldenrod;padding:10px;width:100px;">
+{{ expence.name }}<br><hr>
+{{ expence.price }}<br></div>
 {% endfor %}
 </div>
 Menojesi summa: {{ expences_sum }}{% endif %}
