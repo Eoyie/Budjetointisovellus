@@ -1,6 +1,6 @@
 from flask import redirect, render_template, request, session
 from app import app
-import users, categories, expences
+import users, categories, expences, budgets
 
 @app.route("/")
 def index():
@@ -76,22 +76,37 @@ def new_expence():
         date = request.form["date"]
         category_id  = request.form["category"]
         notes = request.form["notes"]
-        print(date)
         if expences.add_expence(price, category_id, date, notes, session.get("user_id")):
             return redirect("/home")
         else:
-            return render_template("error.html", message="Menon lisääminen ei onnistunut")
+            return render_template("error_logged_in.html", message="Menon lisääminen ei onnistunut")
     
-@app.route("/settings", methods=["GET", "POST"])
+@app.route("/categories", methods=["GET", "POST"])
 def manage_categories():
     if not session.get("logged_in"):
         return render_template("error.html", message="Et ole kirjautunut sisään!")
     if request.method == "GET":
         user_categories = categories.get_all_categories(session.get("user_id"))
-        return render_template("settings.html", categories=user_categories)
+        return render_template("categories.html", categories=user_categories)
     if request.method == "POST":
         name = request.form["name"]
-    if categories.add_category(name, session.get("user_id")):
-        return redirect("/settings")
-    else:
-        return render_template("error.html", message="Kategorian lisäys ei onnistunut")
+        if categories.add_category(name, session.get("user_id")):
+            return redirect("/categories")
+        else:
+            return render_template("error_logged_in.html", message="Kategorian lisäys ei onnistunut")
+    
+@app.route("/budgets", methods=["GET", "POST"])
+def manage_budgets():
+    if not session.get("logged_in"):
+        return render_template("error.html", message="Et ole kirjautunut sisään!")
+    if request.method == "GET":
+        user_budgets = budgets.get_all_budgets(session.get("user_id"))
+        return render_template("budget.html", budgets=user_budgets)
+    if request.method == "POST":
+        budget = request.form["budget"]
+        month = request.form["month"]
+        notes = request.form["notes"]
+        if budgets.add_budget(budget, month, notes, session.get("user_id")):
+            return redirect("/budgets")
+        else:
+            return render_template("error_logged_in.html", message="Budjetin lisäys ei onnistunut")

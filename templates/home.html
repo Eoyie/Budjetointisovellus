@@ -3,25 +3,46 @@
     display: flex;
     flex-wrap: wrap;
 }
+.box {
+    float: left;
+    width: 200px;
+    margin-left: 10px;
+    margin-top: 10px;
+    padding: 5px;
+    border: 2px solid black;
+}
+.space { margin-top: 100px; }
 </style>
-{% extends "logged_in_layout.html" %}
+{% extends "layout_logged_in.html" %}
 {% block title %}Etusivu{% endblock %}
 {% block content %}
 {% if session.user_id %}
-<p>Hei {{ message }}!</p>
-<ul>
-    <li><a href="/new_expence">Lisää meno</a>
-</ul>
+<h3>Hei {{ message }}!</h3>
+    <div class="box">
+        <ul>
+            <li><a href="/new_expence">Lisää meno</a>
+        </ul>
+    </div>
+    <div class="box">
+        <ul>
+            <li><a href="/budgets">Muuta budjettia</a>
+        </ul>
+    </div>
+<div class="space"></div>
 {% if expences_sum %}
+<hr>
 <h3>Sinun menosi tässä kuussa:</h3><br>
-<div class="container">
-{% for expence in expences %}
-<div style="background:goldenrod;padding:10px;width:100px;">
-{{ expence.name }}<br><hr>
-{{ expence.price }}<br></div>
-{% endfor %}
-</div>
-Menojesi summa: {{ expences_sum }}{% endif %}
+    <div class="container">
+    {% for expence in expences %}
+        <div style="border:2px solid black;padding:10px;width:100px;text-align:center;">
+            <b>{{ expence.name }}</b><br><hr>
+            {{ expence.price }}<br>
+        </div>
+    {% endfor %}
+    </div>
+<br><hr>
+<h3>Menojesi summa tässä kuussa: {{ expences_sum }}</h3>
+{% endif %}
 {% else %}
 Et ole kirjautunut sisään!
-{% endif %}{% endblock %}
+{% endif %}{% endblock %}s

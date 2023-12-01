@@ -21,7 +21,6 @@ def logout():
     del session["user_id"]
     session["logged_in"] = False
 
-
 def register(username, password):
     hash_value = generate_password_hash(password)
     try:
@@ -40,4 +39,3 @@ def username(id):
     result = db.session.execute(sql, {"id":id})
     user = result.fetchone()
     return user[0]
-

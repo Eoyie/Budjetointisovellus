@@ -7,7 +7,7 @@ CREATE TABLE categories (
     id SERIAL PRIMARY KEY, 
     name TEXT, 
     grouping INTEGER, 
-    user_id INTEGER REFERENCES users
+    user_id INTEGER REFERENCES users,
     visible BOOLEAN
     );
 CREATE TABLE expences (
@@ -16,12 +16,14 @@ CREATE TABLE expences (
     category_id INTEGER REFERENCES categories, 
     date DATE, 
     notes TEXT, 
-    user_id INTEGER REFERENCES users
+    user_id INTEGER REFERENCES users,
     visible BOOLEAN
     );
 CREATE TABLE budgets (
     id SERIAL PRIMARY KEY,
     amount INTEGER,
     date DATE,
+    notes TEXT,
+    user_id INTEGER REFERENCES users,
     visible BOOLEAN
     );

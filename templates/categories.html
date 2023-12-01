@@ -1,9 +1,9 @@
-{% extends "logged_in_layout.html" %}
+{% extends "layout_logged_in.html" %}
 {% block title %}Etusivu{% endblock %}
 {% block content %}
 {% if session.user_id %}
 <h3>Lisää kategoria</h3><br>
-<form action="/settings" method="post" onsubmit="return check(this)">
+<form action="/categories" method="post" onsubmit="return check(this)">
     Kategorian nimi: <input type="text" name="name" required>
     <input type="submit" value="Lisää Kategoria">
     </form>
