@@ -15,7 +15,8 @@ def add_category(name, user_id):
     return True
 
 def check_categories_exist(user_id):
-    sql = text("SELECT name FROM categories WHERE user_id=:user_id")
+    sql = text("SELECT name FROM categories WHERE user_id=:user_id \
+                AND visible=TRUE")
     result = db.session.execute(sql, {"user_id":user_id})
     category = result.fetchone()
     if not category:
@@ -23,18 +24,25 @@ def check_categories_exist(user_id):
     return True
 
 def get_all_categories(user_id):
-    sql = text("SELECT name,id FROM categories WHERE user_id=:user_id")
+    sql = text("SELECT name, id FROM categories WHERE user_id=:user_id \
+                AND visible=TRUE ORDER BY name")
     result = db.session.execute(sql, {"user_id":user_id})
     categories = result.fetchall()
     return categories
 
 def get_category_id(name, user_id):
     sql = text("SELECT id FROM categories \
-               WHERE name=:name and user_id=:user_id")
+               WHERE name=:name and user_id=:user_id AND visible=TRUE")
     result = db.session.execute(sql, {"name":name, "user_id":user_id})
     category_id = result.fetchall()
     return category_id
         
-def group_by_categories(expense_list, user_id):
-    categories = get_all_categories(user_id)
-    print(categories, "\n", expense_list)
+def delete_from_view(user_id, category_id):
+    try:
+        sql = text("UPDATE categories SET visible=FALSE\
+                        WHERE user_id=:user_id AND id=:category_id")
+        db.session.execute(sql, {"user_id":user_id, "category_id":category_id})
+        db.session.commit()
+    except:
+        return False
+    return True

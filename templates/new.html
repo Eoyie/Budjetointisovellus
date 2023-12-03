@@ -3,7 +3,7 @@
 {% block content %}
 {% if session.user_id %}
 <form action="/new_expense" method="post" onsubmit="return check(this)">
-    <p>Hinta:<br>
+    <p>Menon hinta:<br>
     <input type="text" name="price" required></p>
     <p>Päivämäärä:
     <input type="date" name="date" required> <br>

@@ -10,27 +10,17 @@ def index():
         user_expenses = expenses.get_this_month_expenses_by_category(user_id)
         expenses_sum = expenses.get_this_month_sum_expenses(user_id)
         user_budget = budgets.this_month_budget(user_id)
-        return render_template("home.html", 
+        if expenses_sum:
+            budget_remaining = user_budget.amount - expenses_sum
+        else:
+            budget_remaining = user_budget.amount
+        return render_template("home.html",
                                 message=username,
                                 expenses=user_expenses,
                                 expenses_sum=expenses_sum,
-                                budget=user_budget)
+                                budget=user_budget,
+                                budget_remaining=budget_remaining)
     return render_template("index.html")
-
-@app.route("/home")
-def home():
-    if session.get("logged_in"):
-        user_id = session.get("user_id")
-        username = users.username(user_id)
-        user_expenses = expenses.get_this_month_expenses_by_category(user_id)
-        expenses_sum = expenses.get_this_month_sum_expenses(user_id)
-        user_budget = budgets.this_month_budget(user_id)
-        return render_template("home.html", 
-                                message=username, 
-                                expenses=user_expenses,
-                                expenses_sum=expenses_sum, 
-                                budget=user_budget)
-    return render_template("error.html", message="Et ole kirjautunut sisään!")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -43,7 +33,7 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
         if users.login(username, password):
-            return redirect("/home")
+            return redirect("/")
         return render_template("error.html", 
                                 message="Väärä tunnus tai salasana")
 
@@ -67,7 +57,7 @@ def register():
         if password1 != password2:
             return render_template("error.html", message="Salasanat eroavat")
         if users.register(username, password1):
-            return redirect("/home")
+            return redirect("/")
         return render_template("error.html", 
                                 message="Rekisteröinti ei onnistunut")
 
@@ -90,7 +80,7 @@ def new_expense():
         category_id  = request.form["category"]
         notes = request.form["notes"]
         if expenses.add_expense(price, category_id, date, notes, user_id):
-            return redirect("/home")
+            return redirect("/")
         return render_template("error_logged_in.html", 
                                 message="Menon lisääminen ei onnistunut")
     
@@ -104,11 +94,18 @@ def manage_categories():
         user_categories = categories.get_all_categories(user_id)
         return render_template("categories.html", categories=user_categories)
     if request.method == "POST":
-        name = request.form["name"]
-        if categories.add_category(name, user_id):
-            return redirect("/categories")
+        if request.form["action"] == "Lisaa kategoria":
+            name = request.form["name"]
+            if categories.add_category(name, user_id):
+                return redirect("/categories")
+            return render_template("error_logged_in.html",
+                                    message="Kategorian lisäys ei onnistunut")
+        category_id = request.form["category"]
+        if categories.delete_from_view(user_id, category_id):
+            if expenses.delete_all_type_from_view(user_id, category_id):
+                return redirect("/categories")
         return render_template("error_logged_in.html",
-                                message="Kategorian lisäys ei onnistunut")
+                                message="Kategorian poisto ei onnistunut")
     
 @app.route("/budgets", methods=["GET", "POST"])
 def manage_budgets():

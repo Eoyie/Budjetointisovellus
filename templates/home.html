@@ -5,7 +5,7 @@
 }
 .box {
     float: left;
-    width: 400px;
+    width: 500px;
     margin-left: 10px;
     margin-top: 10px;
     padding: 5px;
@@ -13,37 +13,40 @@
 }
 .invisible_box {
     float: left;
-    width: 200px;
+    width: 220px;
     margin-left: 10px;
     margin-top: 10px;
     padding: 5px;
 }
-.space { margin-top: 200px; }
+.space { margin-top: 250px; }
 </style>
 {% extends "layout_logged_in.html" %}
 {% block title %}Etusivu{% endblock %}
 {% block content %}
 {% if session.user_id %}
 <h3>Hei {{ message }}!</h3>
-    <div class="box">
+<div class="box">
+    <div class="invisible_box">
         <h3>Budjetti</h3>
         {% if budget %}
-        {{ budget.amount }}
+        Tämän kuun budjetti:{{ budget.amount }}
+        Jäljellä: {{ budget_remaining }} 
         <ul>
             <li><a href="/budgets">Muuta budjettia</a>
         </ul>
         {% else %}
         <ul>
-            <li><a href="/budgets">Muuta budjettia</a>
+            <li><a href="/budgets">Lisää budjetti</a>
         </ul>
         {% endif %}
     </div>
-    <div class="box">
+    <div class="invisible_box">
         <h3>Hallinnoi menoja</h3>
         <ul>
             <li><a href="/new_expense">Lisää meno</a>
         </ul>
     </div>
+</div>
 <div class="space"></div>
 {% if expenses_sum %}
 <hr>

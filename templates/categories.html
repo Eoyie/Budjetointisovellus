@@ -1,14 +1,38 @@
+<style>
+    .invisible_box {
+    float: left;
+    width: 220px;
+    margin-left: 10px;
+    margin-top: 10px;
+    padding: 5px;
+}
+.space { margin-top: 250px; }
+</style>
 {% extends "layout_logged_in.html" %}
 {% block title %}Etusivu{% endblock %}
 {% block content %}
 {% if session.user_id %}
+<div class="invisible_box">
 <h3>Lisää kategoria</h3><br>
 <form action="/categories" method="post" onsubmit="return check(this)">
     Kategorian nimi: <input type="text" name="name" required>
-    <input type="submit" value="Lisää Kategoria">
+    <input type="submit" name="action" value="Lisaa kategoria">
     </form>
-<hr>
+</div>
 {% if categories %}
+<div class="invisible_box">
+<h3>Poista kategoria</h3><br>
+<form action="/categories" method="post">
+    <p><select name="category">
+        {% for category in categories %}
+        <option value="{{ category.id }}"> {{ category.name }}
+        {% endfor %}
+        </select></p>
+    <input type="submit" name="action" value="Poista kategoria">
+    </form>
+</div>
+<div class="space"></div>
+<hr>
 <h3>Sinun kategoriat:</h3><br>
 <ul>
 {% for category in categories %}
@@ -23,5 +47,5 @@
         }
         return true;
     }
-    </script>
+</script>
 {% endif %}{% endif %}{% endblock %}
