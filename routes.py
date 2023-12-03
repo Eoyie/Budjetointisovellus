@@ -44,9 +44,8 @@ def login():
         password = request.form["password"]
         if users.login(username, password):
             return redirect("/home")
-        else:
-            return render_template("error.html", 
-                                    message="Väärä tunnus tai salasana")
+        return render_template("error.html", 
+                                message="Väärä tunnus tai salasana")
 
 @app.route("/logout")
 def logout():
@@ -69,9 +68,8 @@ def register():
             return render_template("error.html", message="Salasanat eroavat")
         if users.register(username, password1):
             return redirect("/home")
-        else:
-            return render_template("error.html", 
-                                   message="Rekisteröinti ei onnistunut")
+        return render_template("error.html", 
+                                message="Rekisteröinti ei onnistunut")
 
 @app.route("/new_expense", methods=["GET", "POST"])
 def new_expense():
@@ -93,9 +91,8 @@ def new_expense():
         notes = request.form["notes"]
         if expenses.add_expense(price, category_id, date, notes, user_id):
             return redirect("/home")
-        else:
-            return render_template("error_logged_in.html", 
-                                   message="Menon lisääminen ei onnistunut")
+        return render_template("error_logged_in.html", 
+                                message="Menon lisääminen ei onnistunut")
     
 @app.route("/categories", methods=["GET", "POST"])
 def manage_categories():
@@ -110,9 +107,8 @@ def manage_categories():
         name = request.form["name"]
         if categories.add_category(name, user_id):
             return redirect("/categories")
-        else:
-            return render_template("error_logged_in.html",
-                                   message="Kategorian lisäys ei onnistunut")
+        return render_template("error_logged_in.html",
+                                message="Kategorian lisäys ei onnistunut")
     
 @app.route("/budgets", methods=["GET", "POST"])
 def manage_budgets():
@@ -129,6 +125,17 @@ def manage_budgets():
         notes = request.form["notes"]
         if budgets.add_budget(budget, month, notes, user_id):
             return redirect("/budgets")
-        else:
-            return render_template("error_logged_in.html",
-                                   message="Budjetin lisäys ei onnistunut")
+        return render_template("error_logged_in.html",
+                                message="Budjetin lisäys ei onnistunut")
+
+@app.route("/delete_budget", methods=["POST"])
+def delete_budget():
+    if not session.get("logged_in"):
+        return render_template("error.html",
+                               message="Et ole kirjautunut sisään!")
+    user_id = session.get("user_id")
+    budget_id = request.args.get("id")
+    if budgets.delete_from_view(user_id, budget_id):
+        return redirect("/budgets")
+    return render_template("error_logged_in.html",
+                            message="Budjetin poistaminen ei onnistunut")

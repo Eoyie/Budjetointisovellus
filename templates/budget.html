@@ -8,10 +8,10 @@
 {% block title %}Etusivu{% endblock %}
 {% block content %}
 {% if session.user_id %}
-<h3>Lisää kategoria</h3><br>
+<h3>Lisää tai muokkaa budjettia</h3><br>
 <form action="/budgets" method="post" onsubmit="return check(this)">
     Budjetin määrä: <input type="text" name="budget" required>
-    Budjetointi kuukausi: <input type="month" name="month">
+    Budjetointi kuukausi: <input type="month" name="month" required>
     <p>Lisätietoja:<br>
         <textarea name="notes" rows="3" cols="40">
         </textarea></p>
@@ -25,7 +25,11 @@
             <div style="border:2px solid black;padding:10px;width:100px;
                         text-align:center;">
                 <b>{{ budget.month }}</b><br><hr>
-                {{ budget.amount }}<br>
+                {{ budget.amount }}<br><hr>
+                <form action="/delete_budget?id={{ budget.id }}"
+                 method="POST">
+                    <input type="submit" value="Poista">
+                </form>
             </div>
         {% endfor %}
         </div>
