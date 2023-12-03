@@ -15,7 +15,8 @@ Sovelluksessa pitäisi toimia:
  - Lisätään vielä tietokanta future_expenses (eli tulee 5 tietokantaa!!).
  - Ulkonäkö yleisesti paremmaksi (Varsinkin menojen listaus!!)
  - Budjettejen lisätiedot nähtäviin (tai pois).
- - Lisää sääntöjä esim. salasanan luomiseen, nyt vain pituus rajoja! 
+ - Lisää sääntöjä esim. salasanan luomiseen, nyt vain pituus rajoja!
+ - Kategorioiden samojen nimien käsittely!
  - Yleistä koodin siivousta ym.
 
 ## Miten pystyy käynnistää
