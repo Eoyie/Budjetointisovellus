@@ -37,7 +37,7 @@ def login():
         password = request.form["password"]
         if users.login(username, password):
             return redirect("/")
-        return render_template("error.html", 
+        return render_template("error.html",
                                 message="Väärä tunnus tai salasana")
 
 @app.route("/logout")
@@ -61,13 +61,13 @@ def register():
             return render_template("error.html", message="Salasanat eroavat")
         if users.register(username, password1):
             return redirect("/")
-        return render_template("error.html", 
+        return render_template("error.html",
                                 message="Rekisteröinti ei onnistunut")
 
 @app.route("/new_expense", methods=["GET", "POST"])
 def new_expense():
     if not session.get("logged_in"):
-        return render_template("error.html", 
+        return render_template("error.html",
                                message="Et ole kirjautunut sisään!")
     
     user_id = session.get("user_id")
@@ -84,13 +84,13 @@ def new_expense():
         notes = request.form["notes"]
         if expenses.add_expense(price, category_id, date, notes, user_id):
             return redirect("/")
-        return render_template("error_logged_in.html", 
+        return render_template("error_logged_in.html",
                                 message="Menon lisääminen ei onnistunut")
 
 @app.route("/view_expenses", methods=["GET", "POST"])
 def view_expenses():
     if not session.get("logged_in"):
-        return render_template("error.html", 
+        return render_template("error.html",
                                message="Et ole kirjautunut sisään!")
     user_id = session.get("user_id")
     if request.method == "GET":
@@ -106,7 +106,7 @@ def view_expenses():
         notes = request.form["notes"]
         if expenses.add_expense(price, category_id, date, notes, user_id):
             return redirect("/")
-        return render_template("error_logged_in.html", 
+        return render_template("error_logged_in.html",
                                 message="Menon lisääminen ei onnistunut")
 
 @app.route("/delete_expense", methods=["GET", "POST"])

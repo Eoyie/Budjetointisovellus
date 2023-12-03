@@ -36,7 +36,7 @@ def get_category_id(name, user_id):
     result = db.session.execute(sql, {"name":name, "user_id":user_id})
     category_id = result.fetchall()
     return category_id
-        
+
 def delete_from_view(user_id, category_id):
     try:
         sql = text("UPDATE categories SET visible=FALSE\
