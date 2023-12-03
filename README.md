@@ -18,7 +18,7 @@ Sovelluksessa pitäisi toimia:
  - Lisää sääntöjä esim. salasanan luomiseen, nyt vain pituus rajoja!
  - Kategorioiden samojen nimien käsittely!
  - Yleistä koodin siivousta ym.
- - Automaattinen uloskirjatuminen? (Koska nyt jos on kirjautunut sisään ja poistaa kaikki tietokannat ja luo ne uudestaan, niin ei toimi ellei kirjoita manuaalisesti /logout :(  )
+ - Automaattinen uloskirjatuminen? (Koska nyt jos on kirjautunut sisään ja poistaa kaikki tietokannat ja luo ne uudestaan, niin ei toimi ellei kirjoita manuaalisesti /logout...)
 
 ## Miten pystyy käynnistää
 **Sovellus ei ole testattavissa Fly.iossa!**
