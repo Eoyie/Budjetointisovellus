@@ -1,5 +1,5 @@
 {% extends "layout_logged_in.html" %}
-{% block title %}Etusivu{% endblock %}
+{% block title %}Expences{% endblock %}
 {% block content %}
 {% if session.user_id %}
 <form action="/new_expense" method="post" onsubmit="return check(this)">

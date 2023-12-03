@@ -22,12 +22,23 @@ def add_expense(price, category_id, date, notes, user_id):
         return False
     return True
 
+def check_expenses_exist(user_id):
+    sql = text("SELECT date FROM expenses WHERE user_id=:user_id \
+                AND visible=TRUE")
+    result = db.session.execute(sql, {"user_id":user_id})
+    expenses = result.fetchone()
+    if not expenses:
+        return False
+    return True
+
 def get_all_expenses(user_id):
-    sql = text("SELECT price,category_id,date,notes \
-               FROM expenses WHERE user_id=:user_id AND visible=TRUE")
+    sql = text("SELECT E.price, C.name, E.date, E.notes, E.id \
+            FROM expenses E INNER JOIN categories C ON C.id = E.category_id \
+            WHERE E.user_id=:user_id AND E.visible=TRUE \
+            GROUP BY E.price, C.name, E.date, E.notes, E.id ORDER BY E.date ")
     result = db.session.execute(sql, {"user_id":user_id})
     expenses = result.fetchall()
-    return order_expenses_by_date(expenses)
+    return expenses
 
 def get_sum_expenses(user_id):
     sql = text("SELECT SUM(price) FROM expenses \
@@ -46,10 +57,6 @@ def get_this_month_sum_expenses(user_id):
                                       "year":year})
     expenses_sum = result.fetchone()[0]
     return expenses_sum
-
-def order_expenses_by_date(expense_list):
-    expense_list.sort(key = lambda expense: expense[3], reverse=True)
-    return expense_list
 
 def get_this_month_expenses_by_category(user_id):
     month = datetime.now().month
@@ -71,6 +78,16 @@ def delete_all_type_from_view(user_id, category_id):
         sql = text("UPDATE expenses SET visible=FALSE \
                     WHERE user_id=:user_id AND category_id=:category_id")
         db.session.execute(sql, {"user_id":user_id, "category_id":category_id})
+        db.session.commit()
+    except:
+        return False
+    return True
+
+def delete_from_view(user_id, expense_id):
+    try:
+        sql = text("UPDATE expenses SET visible=FALSE\
+                        WHERE user_id=:user_id AND id=:expense_id")
+        db.session.execute(sql, {"user_id":user_id, "expense_id":expense_id})
         db.session.commit()
     except:
         return False

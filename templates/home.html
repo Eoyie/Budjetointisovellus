@@ -45,6 +45,11 @@
         <ul>
             <li><a href="/new_expense">Lisää meno</a>
         </ul>
+        {% if expenses_sum %}
+        <ul>
+            <li><a href="/view_expenses">Tutki menoja</a>
+        </ul>
+        {% endif %}
     </div>
 </div>
 <div class="space"></div>
@@ -56,7 +61,7 @@
         <div style="border:2px solid black;padding:10px;width:100px;
                     text-align:center;">
             <b>{{ expense.name }}</b><br><hr>
-            {{ expense.price }}<br>
+            Mennyt: {{ expense.price }}<br>
         </div>
     {% endfor %}
     </div>

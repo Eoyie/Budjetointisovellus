@@ -10,10 +10,13 @@ def index():
         user_expenses = expenses.get_this_month_expenses_by_category(user_id)
         expenses_sum = expenses.get_this_month_sum_expenses(user_id)
         user_budget = budgets.this_month_budget(user_id)
-        if expenses_sum:
-            budget_remaining = user_budget.amount - expenses_sum
+        if user_budget:
+            if expenses_sum:
+                budget_remaining = user_budget.amount - expenses_sum
+            else:
+                budget_remaining = user_budget.amount
         else:
-            budget_remaining = user_budget.amount
+            budget_remaining = None
         return render_template("home.html",
                                 message=username,
                                 expenses=user_expenses,
@@ -73,7 +76,7 @@ def new_expense():
             user_categories = categories.get_all_categories(user_id)
             return render_template("new.html", categories=user_categories)
         return render_template("error_logged_in.html",
-                                message="Lisää ensin kategoria asetuksista")
+                                message="Lisää ensin kategoria")
     if request.method == "POST":
         price = request.form["price"]
         date = request.form["date"]
@@ -83,6 +86,41 @@ def new_expense():
             return redirect("/")
         return render_template("error_logged_in.html", 
                                 message="Menon lisääminen ei onnistunut")
+
+@app.route("/view_expenses", methods=["GET", "POST"])
+def view_expenses():
+    if not session.get("logged_in"):
+        return render_template("error.html", 
+                               message="Et ole kirjautunut sisään!")
+    user_id = session.get("user_id")
+    if request.method == "GET":
+        if expenses.check_expenses_exist(user_id):
+            user_expenses = expenses.get_all_expenses(user_id)
+            return render_template("view_expenses.html", expenses=user_expenses)
+        return render_template("error_logged_in.html",
+                                message="Lisää ensin meno")
+    if request.method == "POST":
+        price = request.form["price"]
+        date = request.form["date"]
+        category_id  = request.form["category"]
+        notes = request.form["notes"]
+        if expenses.add_expense(price, category_id, date, notes, user_id):
+            return redirect("/")
+        return render_template("error_logged_in.html", 
+                                message="Menon lisääminen ei onnistunut")
+
+@app.route("/delete_expense", methods=["POST"])
+def delete_expense():
+    if not session.get("logged_in"):
+        return render_template("error.html",
+                               message="Et ole kirjautunut sisään!")
+    user_id = session.get("user_id")
+    expense_id = request.args.get("id")
+    if expenses.delete_from_view(user_id, expense_id):
+        return redirect("/view_expenses")
+    return render_template("error_logged_in.html",
+                            message="Menon poistaminen ei onnistunut")
+
     
 @app.route("/categories", methods=["GET", "POST"])
 def manage_categories():

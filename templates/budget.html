@@ -5,14 +5,14 @@
     }
 </style>
 {% extends "layout_logged_in.html" %}
-{% block title %}Etusivu{% endblock %}
+{% block title %}Budjetti{% endblock %}
 {% block content %}
 {% if session.user_id %}
 <h3>Lisää tai muokkaa budjettia</h3><br>
 <form action="/budgets" method="post" onsubmit="return check(this)">
     Budjetin määrä: <input type="text" name="budget" required>
     Budjetointi kuukausi: <input type="month" name="month" required>
-    <p>Lisätietoja: (Ei tällä hetkellä näy missään!) <br>
+    <p>Lisätietoja:<br>
         <textarea name="notes" rows="3" cols="40">
         </textarea></p>
     <input type="submit" value="Lisää budjetti">

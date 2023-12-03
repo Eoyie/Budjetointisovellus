@@ -1,0 +1,16 @@
+{% extends "layout_logged_in.html" %}
+{% block title %}View{% endblock %}
+{% block content %}
+{% if session.user_id %}
+{% if expenses %}
+<h2>Sinun kaikki menosi:</h2><hr>
+{% for expense in expenses %}
+Menon kategoria: {{ expense.name }}<br>
+Menon hinta: {{ expense.price }}<br>
+Päivämäärä: {{ expense.date }}<br>
+Lisätietoja: {{ expense.notes }}<br>
+<form action="/delete_expense?id={{ expense.id }}"
+method="POST">
+   <input type="submit" value="Poista"><br>
+</form><hr>
+{% endfor %}{% endif %}{% endif %}{% endblock %}
