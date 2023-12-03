@@ -1,15 +1,75 @@
 # Budjetointisovellus
 
+### Välipalautus 2
+
+## Sovelluksen nykyinen tilanne
+Sovelluksessa pitäisi toimia:
+- Käyttäjän luominen ja kirjautuminen
+- Yksinkertaisten meno kategorioiden lisääminen
+- Yksinkertaisten menojen lisääminen ja hyvin yksinkertainen yhteenveto
+- Kaikki keksimäni esteet sivujen näkymisille (Ei pysty nähdä esim. menojen lisäys sivua, jos ei ole kirjautunut) ja väärien/viallisten tietojen antamiselle on lisätty. Nämä yleisesti toimivat?
+ 
+Muita kommentteja ja tunnettuja ongelmia:
+- Vain käyttäjien käyttö ja tietokanta on sinäänsä valmis. Esimerkiksi kategorioiden yhtä osuutta "grouping" ei käytetä vielä ollenkaan, koska menot vain näytetään hyvin yksinkertaisessa listassa.
+- Menojen listasta puheenollen, jos esim. notes on jätetty tyhjäksi on lopussa ylimääräinen pilkku. Koko lista on placeholder ja tulee kokonaan muuttumaan, mutta tällä hetkellä vain näyttää, että meno on lisätty käyttäjän meno tietokantaan.
+- Error sivu näyttää aina ulos kirjautuneen layoutin, vaikka oltaisiin kirjauduttu sisään.
+- Kategorioiden paikka asetuksissa hieman outo, en ole vielä päättänyt missä näitä lisätään. Asetuksissa ei vielä mitään, mutta suunnittelisin esim. grouping sääntöjä (siis miten menoja esitetään ruudulla)
+- **Ei ole vielä ylläpitäjiä ym. vielä hyvin yksinkertainen ohjelman pohja!!!**
+ 
+## Miten pystyy käynnistää
+**Sovellus ei ole testattavissa Fly.iossa!**
+Tässä on siis ohjeet sovelluksen käynnistämiseen paikallisesti:
+
+Kloonaa repositorio omalle koneellesi ja siirry sen juurikansioon. Luo kansioon oma .env-tiedosto ja määritä sen sisältö näin:
+ 
+```
+DATABASE_URL=<tietokannan-paikallinen-osoite>
+SECRET_KEY=<salainen-avain>
+```
+ 
+- *tietokannan-paikallinen-osoite* eli postgresql:///user, jossa user on käytettävän tietokannan nimi (ja tämä näkyy myös PostgreSQL-tulkissa rivien alussa)
+- *salainen-avain* eli esim. Pythonilla luotu salainen avain:
+ 
+```
+  $ python3
+>>> import secrets
+>>> secrets.token_hex(16)
+```
+ 
+Aktivoi virtuaaliympäristö ja asenna sovelluksen riippuvuudet komennoilla:
+ 
+```
+$ python3 -m venv venv
+$ source venv/bin/activate
+$ pip install -r ./requirements.txt
+```
+ 
+Muista käynnistää oma PostgreSQL-tulkki! Tähän on ohje [asennusskriptin sivuilla](https://github.com/hy-tsoha/local-pg). Määritä tämän jälkeen tietokannan skeema komennolla:
+ 
+```
+$ psql < schema.sql
+```
+ 
+Tai manuaalisesti psql PostgreSQL-tulkissa!
+ 
+Nyt voit käynnistää sovelluksen komennolla ja avata annetun linkin, josta pääsee sovellukseen.
+ 
+```
+$ flask run
+```
+##
+### Välipalautus 1
+
 En ole vielä täysin varma tarkasta laajuudesta, mutta pääideana olisi tehdä sovellus omien tehtyjen ja mahdollisesti tulevien ostoksien budjetoinnista. Tämä tulisi olla yleisesti mukavampi ja interaktiivisempi, kuin ns. perinteinen excel-taulukko, jota usein käytetään budjetointiin. Siis vielä enemmän idea on erotella ns. turhia, pakollisia ja hupi ostoksia vain yksinkertaisen "mihin meni rahaa" sijaan.
 
 ## Tässä yleisiä idoita sovelluksen toimivuudesta:
 
 Sovelluksessa näkyy käyttäjän ostoksia ja tulevia ostosuunnitelmia, joista löytyy tarkempia tietoja menojen tärkeydestä ja tarkoituksesta. Jokainen käyttäjä on peruskäyttäjä tai ylläpitäjä.
-- Käyttäjä voi kirjautua sisään ja ulos, sekä luoda uuden käyttäjän
-- Käyttäjä voi päättää mitä budjetoinnin alueita hän käyttää ja mitä ei (Esim. jos ei ole autoa, tähän liittyvää osuutta ei ole aina turhaan näkyvillä). Voi siis esim. käyttää ainoastaan ruokaostoksien tai ns. "ylimääräisten" ostoksien seuraamiseen.
-- Käyttäjä voi laittaa tietoja ostoksistaan yksityiskohtaisia tietoja ja lisätä myös myöhemmin kommentteja näihin liittyen. Voi tehdä näistä myös toistuvia (esim. vuokraa ei tarvitse aina lisätä uudestaan)
-- Käyttäjä voi myös tehdä kirjauksia asioista, mitä saatetaan ostaa tulevaisuudessa. Olkoon esim. lahjoja, "ylimääräistä" hauskaa tai tarpeellisia asioita. Ja nähdä miten nämä vaikuttaisivat tulevan ajan budjetointiin tai voi myös olla vain "idea" ilman mitään vaikutusta.
-- Käyttäjä voi nähdä näistä kaikista asioista jonkinlaisen yhteenvedon.
-- Käyttäjä voi helposti etsiä ja muokata tehtyjä kirjauksia.
+- Käyttäjä voi kirjautua sisään ja ulos, sekä luoda uuden käyttäjän ##DONE##
+- Käyttäjä voi päättää mitä budjetoinnin alueita hän käyttää ja mitä ei (Esim. jos ei ole autoa, tähän liittyvää osuutta ei ole aina turhaan näkyvillä). Voi siis esim. käyttää ainoastaan ruokaostoksien tai ns. "ylimääräisten" ostoksien seuraamiseen.  ##STARTED##
+- Käyttäjä voi laittaa tietoja ostoksistaan yksityiskohtaisia tietoja ja lisätä myös myöhemmin kommentteja näihin liittyen. Voi tehdä näistä myös toistuvia (esim. vuokraa ei tarvitse aina lisätä uudestaan) ##VAIN NOTES MUUT TODO##
+- Käyttäjä voi myös tehdä kirjauksia asioista, mitä saatetaan ostaa tulevaisuudessa. Olkoon esim. lahjoja, "ylimääräistä" hauskaa tai tarpeellisia asioita. Ja nähdä miten nämä vaikuttaisivat tulevan ajan budjetointiin tai voi myös olla vain "idea" ilman mitään vaikutusta. ##TODO##
+- Käyttäjä voi nähdä näistä kaikista asioista jonkinlaisen yhteenvedon.  ##STARTED##
+- Käyttäjä voi helposti etsiä ja muokata tehtyjä kirjauksia.  ##TODO##
 
 Ylläpitäjän rooli on vielä hieman auki, sillä en ole varma kuinka paljon käyttäjän tiedoista on salattua. Käyttäjälle kokemus on sinäänsä hyvin yksityinen, joten seuranta ei ole kovin tarpeellista. Ehkä, jos kaksi käyttäjää voivat jotenkin olla vuorovaikutuksessa esim. yhdistää budjetteja niin tällöin, kyllä. Budjetoinnissa ei sinäänsä voi tehdä paljoa "väärin", johon ylläpitäjän pitäisi puuttua. Asia on vielä pohdinnan alla siis..
