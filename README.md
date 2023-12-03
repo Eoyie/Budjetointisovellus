@@ -74,4 +74,4 @@ Sovelluksessa näkyy käyttäjän ostoksia ja tulevia ostosuunnitelmia, joista l
 - Käyttäjä voi nähdä näistä kaikista asioista jonkinlaisen yhteenvedon.  ##DONE?##
 - Käyttäjä voi helposti etsiä ja muokata tehtyjä kirjauksia.  ##CHANGED##
 
-Ylläpitäjän rooli on vielä hieman auki, sillä en ole varma kuinka paljon käyttäjän tiedoista on salattua. Käyttäjälle kokemus on sinäänsä hyvin yksityinen, joten seuranta ei ole kovin tarpeellista. Ehkä, jos kaksi käyttäjää voivat jotenkin olla vuorovaikutuksessa esim. yhdistää budjetteja niin tällöin, kyllä. Budjetoinnissa ei sinäänsä voi tehdä paljoa "väärin", johon ylläpitäjän pitäisi puuttua. Asia on vielä pohdinnan alla siis..
+Ylläpitäjän rooli on vielä hieman auki, sillä en ole varma kuinka paljon käyttäjän tiedoista on salattua. Käyttäjälle kokemus on sinäänsä hyvin yksityinen, joten seuranta ei ole kovin tarpeellista. Ehkä, jos kaksi käyttäjää voivat jotenkin olla vuorovaikutuksessa esim. yhdistää budjetteja niin tällöin, kyllä. Budjetoinnissa ei sinäänsä voi tehdä paljoa "väärin", johon ylläpitäjän pitäisi puuttua. Asia on vielä pohdinnan alla siis.. ##SAATTAA JÄÄDÄ POIS##
