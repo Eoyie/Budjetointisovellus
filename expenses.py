@@ -1,0 +1,66 @@
+from db import db
+from flask import session
+from sqlalchemy.sql import text
+from datetime import datetime
+
+def add_expense(price, category_id, date, notes, user_id):
+    visible = True
+    try:
+        float(price)
+        try:
+            sql = text("INSERT INTO expenses \
+                       (price,category_id,date,notes,user_id,visible) \
+                       VALUES \
+                       (:price,:category_id,:date,:notes,:user_id,:visible)")
+            db.session.execute(sql, {"price":price, "category_id":category_id,
+                                     "date":date, "notes":notes,
+                                     "user_id":user_id,"visible":visible})
+            db.session.commit()
+        except:
+            return False
+    except:
+        return False
+    return True
+
+def get_all_expenses(user_id):
+    sql = text("SELECT price,category_id,date,notes \
+               FROM expenses WHERE user_id=:user_id")
+    result = db.session.execute(sql, {"user_id":user_id})
+    expenses = result.fetchall()
+    return order_expenses_by_date(expenses)
+
+def get_sum_expenses(user_id):
+    sql = text("SELECT SUM(price) FROM expenses WHERE user_id=:user_id")
+    result = db.session.execute(sql, {"user_id":user_id})
+    expenses_sum = result.fetchone()[0]
+    return expenses_sum
+
+def get_this_month_sum_expenses(user_id):
+    month = datetime.now().month
+    year = datetime.now().year
+    sql = text("SELECT SUM(price) FROM expenses WHERE user_id=:user_id \
+               AND EXTRACT(MONTH FROM date)=:month \
+               AND EXTRACT(YEAR FROM date)=:year")
+    result = db.session.execute(sql, {"user_id":user_id, "month":month,
+                                      "year":year})
+    expenses_sum = result.fetchone()[0]
+    return expenses_sum
+
+def order_expenses_by_date(expense_list):
+    expense_list.sort(key = lambda expense: expense[3], reverse=True)
+    return expense_list
+
+def get_this_month_expenses_by_category(user_id):
+    month = datetime.now().month
+    year = datetime.now().year
+    sql = text("SELECT SUM(E.price) as price,C.name \
+                FROM \
+                expenses E INNER JOIN categories C ON C.id = E.category_id \
+                WHERE \
+                E.user_id=:user_id AND EXTRACT(MONTH FROM E.date)=:month \
+                AND EXTRACT(YEAR FROM E.date)=:year \
+                GROUP BY C.name")
+    result = db.session.execute(sql, {"user_id":user_id, "month":month,
+                                      "year":year})
+    expenses = result.fetchall()
+    return expenses

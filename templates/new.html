@@ -2,7 +2,7 @@
 {% block title %}Etusivu{% endblock %}
 {% block content %}
 {% if session.user_id %}
-<form action="/new_expence" method="post" onsubmit="return check(this)">
+<form action="/new_expense" method="post" onsubmit="return check(this)">
     <p>Hinta:<br>
     <input type="text" name="price" required></p>
     <p>Päivämäärä:

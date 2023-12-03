@@ -8,6 +8,7 @@
     <input type="submit" value="Lisää Kategoria">
     </form>
 <hr>
+{% if categories %}
 <h3>Sinun kategoriat:</h3><br>
 <ul>
 {% for category in categories %}
@@ -23,4 +24,4 @@
         return true;
     }
     </script>
-{% endif %}{% endblock %}
+{% endif %}{% endif %}{% endblock %}

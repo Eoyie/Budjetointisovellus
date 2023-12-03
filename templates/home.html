@@ -11,7 +11,7 @@
     padding: 5px;
     border: 2px solid black;
 }
-.space { margin-top: 100px; }
+.space { margin-top: 200px; }
 </style>
 {% extends "layout_logged_in.html" %}
 {% block title %}Etusivu{% endblock %}
@@ -19,29 +19,39 @@
 {% if session.user_id %}
 <h3>Hei {{ message }}!</h3>
     <div class="box">
-        <ul>
-            <li><a href="/new_expence">Lisää meno</a>
-        </ul>
-    </div>
-    <div class="box">
+        <h3>Budjetti</h3>
+        {% if budget %}
+        {{ budget.amount }}
         <ul>
             <li><a href="/budgets">Muuta budjettia</a>
         </ul>
+        {% else %}
+        <ul>
+            <li><a href="/budgets">Muuta budjettia</a>
+        </ul>
+        {% endif %}
+    </div>
+    <div class="box">
+        <h3>Hallinnoi menoja</h3>
+        <ul>
+            <li><a href="/new_expense">Lisää meno</a>
+        </ul>
     </div>
 <div class="space"></div>
-{% if expences_sum %}
+{% if expenses_sum %}
 <hr>
 <h3>Sinun menosi tässä kuussa:</h3><br>
     <div class="container">
-    {% for expence in expences %}
-        <div style="border:2px solid black;padding:10px;width:100px;text-align:center;">
-            <b>{{ expence.name }}</b><br><hr>
-            {{ expence.price }}<br>
+    {% for expense in expenses %}
+        <div style="border:2px solid black;padding:10px;width:100px;
+                    text-align:center;">
+            <b>{{ expense.name }}</b><br><hr>
+            {{ expense.price }}<br>
         </div>
     {% endfor %}
     </div>
 <br><hr>
-<h3>Menojesi summa tässä kuussa: {{ expences_sum }}</h3>
+<h3>Menojesi summa tässä kuussa: {{ expenses_sum }}</h3>
 {% endif %}
 {% else %}
 Et ole kirjautunut sisään!

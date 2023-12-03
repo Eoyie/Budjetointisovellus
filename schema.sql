@@ -10,7 +10,7 @@ CREATE TABLE categories (
     user_id INTEGER REFERENCES users,
     visible BOOLEAN
     );
-CREATE TABLE expences (
+CREATE TABLE expenses (
     id SERIAL PRIMARY KEY,
     price INTEGER, 
     category_id INTEGER REFERENCES categories, 
