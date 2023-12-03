@@ -109,7 +109,7 @@ def view_expenses():
         return render_template("error_logged_in.html", 
                                 message="Menon lisääminen ei onnistunut")
 
-@app.route("/delete_expense", methods=["POST"])
+@app.route("/delete_expense", methods=["GET", "POST"])
 def delete_expense():
     if not session.get("logged_in"):
         return render_template("error.html",
@@ -163,7 +163,7 @@ def manage_budgets():
         return render_template("error_logged_in.html",
                                 message="Budjetin lisäys ei onnistunut")
 
-@app.route("/delete_budget", methods=["POST"])
+@app.route("/delete_budget", methods=["GET","POST"])
 def delete_budget():
     if not session.get("logged_in"):
         return render_template("error.html",

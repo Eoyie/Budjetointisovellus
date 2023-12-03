@@ -20,11 +20,7 @@
     </form>
     <script>
         function check(form) {
-            if (form.name.value.length > 20) {
-                alert("Menon nimi on liian pitkä");
-                return false;
-            }
-            if (form.price.value.length > 20) {
+            if (form.price.value.length > 10) {
                 alert("Hinta on liian suuri");
                 return false;
             }
