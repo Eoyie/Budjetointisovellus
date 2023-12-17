@@ -1,5 +1,11 @@
 # Budjetointisovellus
 
+### HOX
+
+Vielä varmuuden vuoksi kirjoitan tänne, että olen tekemässä loppupalautuksen kurssin vastuuhenkilölle myöhemmin, eikä jonkun muun ohjaajan siis tarvitse arvioida sovellusta (jos viesti labtoolissa ei mennyt perille!)
+
+
+
 ### Välipalautus 3
 
 ## Sovelluksen nykyinen tilanne
