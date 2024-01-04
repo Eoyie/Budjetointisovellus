@@ -89,6 +89,10 @@ def new_expense():
         date = request.form["date"]
         category_id  = request.form["category"]
         notes = request.form["notes"]
+        if not expenses.check_price(price):
+            return render_template("error_logged_in.html",
+                                message="Menon hinta tulee olla positiivinen\
+                                        kokonaisluku.")
         if expenses.add_expense(price, category_id, date, notes, user_id):
             return redirect("/")
         return render_template("error_logged_in.html",
@@ -163,7 +167,7 @@ def manage_budgets():
     if request.method == "POST":
         budget = request.form["budget"]
         month = request.form["month"]
-        if not budget.isnumeric():
+        if not budgets.check_budget(budget):
             return render_template("error_logged_in.html",
                 message="Budjetin lisäys ei onnistunut: \
                         budjetti pitää olla positiivinen kokonaisluku")

@@ -10,6 +10,11 @@ def check_month(date):
         return False
     return True
 
+def check_budget(budget):
+    if budget.isnumeric():
+        return True
+    return False
+
 def add_budget(amount, date, user_id):
     visible = True
     date = datetime.strptime(date, "%Y-%m")

@@ -3,6 +3,11 @@ from flask import session
 from sqlalchemy.sql import text
 from datetime import datetime
 
+def check_price(price):
+    if price.isnumeric():
+        return True
+    return False
+
 def add_expense(price, category_id, date, notes, user_id):
     visible = True
     try:

@@ -28,6 +28,10 @@
                 alert("Lisätiedot on liian pitkä");
                 return false;
             }
+            if (isNaN(form.price.value)) {
+                alert("Annettu hinta ei ole numero");
+                return false;
+            }
             return true;
         }
     </script>
