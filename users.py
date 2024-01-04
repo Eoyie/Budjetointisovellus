@@ -40,3 +40,21 @@ def username(id):
     result = db.session.execute(sql, {"id":id})
     user = result.fetchone()
     return user[0]
+
+def check_valid_username(username):
+    if username.isalpha():
+        return True
+    return False
+
+def check_register_passwords(password1, password2):
+    if password1 == password2:
+        return True
+    return False
+
+def check_if_username_free(username):
+    sql = text("SELECT id FROM users WHERE username=:username")
+    result = db.session.execute(sql, {"username":username})
+    user = result.fetchone()
+    if not user:
+        return True
+    return False

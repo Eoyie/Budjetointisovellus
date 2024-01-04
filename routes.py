@@ -57,8 +57,15 @@ def register():
         username = request.form["username"]
         password1 = request.form["password1"]
         password2 = request.form["password2"]
-        if password1 != password2:
+        if not users.check_valid_username(username):
+            return render_template("error.html",
+                                   message="Annettu käyttäjänimi ei kelpaa\
+                                       TODO: lisää ohjeet")
+        if not users.check_register_passwords(password1, password2):
             return render_template("error.html", message="Salasanat eroavat")
+        if not users.check_if_username_free(username):
+            return render_template("error.html",
+                                message="Annettu käyttäjänimi on jo käytössä")
         if users.register(username, password1):
             return redirect("/")
         return render_template("error.html",
@@ -121,7 +128,6 @@ def delete_expense():
     return render_template("error_logged_in.html",
                             message="Menon poistaminen ei onnistunut")
 
-    
 @app.route("/categories", methods=["GET", "POST"])
 def manage_categories():
     if not session.get("logged_in"):
@@ -144,7 +150,7 @@ def manage_categories():
                 return redirect("/categories")
         return render_template("error_logged_in.html",
                                 message="Kategorian poisto ei onnistunut")
-    
+
 @app.route("/budgets", methods=["GET", "POST"])
 def manage_budgets():
     if not session.get("logged_in"):
