@@ -59,8 +59,8 @@ def register():
         password2 = request.form["password2"]
         if not users.check_valid_username(username):
             return render_template("error.html",
-                                   message="Annettu käyttäjänimi ei kelpaa\
-                                       TODO: lisää ohjeet")
+                                   message="Käyttäjänimen tulee sisältää vain\
+                                    aakkosia.")
         if not users.check_register_passwords(password1, password2):
             return render_template("error.html", message="Salasanat eroavat")
         if not users.check_if_username_free(username):
