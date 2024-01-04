@@ -34,7 +34,11 @@
 <script>
     function check(form) {
         if (form.budget.value.length > 10) {
-            alert("Budjetti on liian suuri");
+            alert("Annettu budjetti on liian suuri");
+            return false;
+        }
+        if (isNaN(form.budget.value)) {
+            alert("Annettu budjetti ei ole numero");
             return false;
         }
         return true;
