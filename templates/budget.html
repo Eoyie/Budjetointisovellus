@@ -12,9 +12,6 @@
 <form action="/budgets" method="post" onsubmit="return check(this)">
     Budjetin määrä: <input type="text" name="budget" required>
     Budjetointi kuukausi: <input type="month" name="month" required>
-    <p>Lisätietoja:<br>
-        <textarea name="notes" rows="3" cols="40">
-        </textarea></p>
     <input type="submit" value="Lisää budjetti">
     </form>
 <hr>
@@ -40,10 +37,6 @@
             alert("Budjetti on liian suuri");
             return false;
         }
-        if (form.notes.value.length > 100) {
-                alert("Lisätiedot on liian pitkä");
-                return false;
-            }
         return true;
     }
 </script>

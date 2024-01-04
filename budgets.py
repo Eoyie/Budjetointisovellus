@@ -3,17 +3,23 @@ from flask import session
 from sqlalchemy.sql import text
 from datetime import datetime
 
-def add_budget(amount, date, notes, user_id):
+def check_month(date):
+    try:
+        date = datetime.strptime(date, "%Y-%m")
+    except:
+        return False
+    return True
+
+def add_budget(amount, date, user_id):
     visible = True
     date = datetime.strptime(date, "%Y-%m")
-    if update_budget(amount, date, notes, user_id):
+    if update_budget(amount, date, user_id):
         return True
     try:
-        sql = text("INSERT INTO budgets (amount,date,notes,user_id,visible)\
-                    VALUES (:amount,:date,:notes,:user_id,:visible)")
+        sql = text("INSERT INTO budgets (amount,date,user_id,visible)\
+                    VALUES (:amount,:date,:user_id,:visible)")
         db.session.execute(sql, {"amount":amount, "date":date,
-                                 "notes":notes, "user_id":user_id,
-                                 "visible":visible})
+                                 "user_id":user_id, "visible":visible})
         db.session.commit()
     except:
         return False
@@ -34,24 +40,24 @@ def this_month_budget(user_id):
         return False
 
 def get_all_budgets(user_id):
-    sql = text("SELECT amount, TO_CHAR(date, 'MM-YYYY') as month, notes, id \
+    sql = text("SELECT amount, TO_CHAR(date, 'MM-YYYY') as month, id \
                FROM budgets WHERE user_id=:user_id AND visible=TRUE \
                ORDER BY date DESC")
     result = db.session.execute(sql, {"user_id":user_id})
     budgets = result.fetchall()
     return budgets
 
-def update_budget(amount, date, notes, user_id):
+def update_budget(amount, date, user_id):
     try:
         sql = text("SELECT id FROM budgets WHERE user_id=:user_id \
                     AND date=:date")
         result = db.session.execute(sql, {"user_id":user_id, "date":date})
         budget_id = ' '.join(map(str, result.fetchone()))
         sql = text("UPDATE budgets \
-                    SET amount=:amount, notes=:notes, visible=TRUE \
+                    SET amount=:amount, visible=TRUE \
                     WHERE user_id=:user_id AND id=:budget_id")
-        db.session.execute(sql, {"amount":amount, "notes":notes,
-                                "user_id":user_id, "budget_id":budget_id})
+        db.session.execute(sql, {"amount":amount, "user_id":user_id, 
+                                 "budget_id":budget_id})
         db.session.commit()
     except:
         return False

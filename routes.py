@@ -157,8 +157,10 @@ def manage_budgets():
     if request.method == "POST":
         budget = request.form["budget"]
         month = request.form["month"]
-        notes = request.form["notes"]
-        if budgets.add_budget(budget, month, notes, user_id):
+        if not budgets.check_month(month):
+            return render_template("error_logged_in.html",
+                    message="Budjetin lisäys ei onnistunut: vuosi liian suuri")         
+        if budgets.add_budget(budget, month, user_id):
             return redirect("/budgets")
         return render_template("error_logged_in.html",
                                 message="Budjetin lisäys ei onnistunut")
