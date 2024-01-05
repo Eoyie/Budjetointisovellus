@@ -1,27 +1,15 @@
 <style>
-.view {
-   margin: auto;
-   width: 1600px;
+table { 
+   border-collapse: collapse; 
+   width: 100%; 
 }
- 
-.wrapper {
-   position: relative;
-   overflow: auto;
-   border: 1px solid black;
-   white-space: nowrap;
-}
- 
-.sticky-col {
-   position: sticky;
-   position: -webkit-sticky;    
-   background-color: white;
-}
-
-.col {
-   width: 150px;
-   min-width: 150px;
-   max-width: 150px; 
-}
+th, td { 
+   text-align: left; 
+   padding: 8px; 
+} 
+tr:nth-child(even) { 
+   background-color: Lightgrey; 
+} 
 </style>
 {% extends "layout_logged_in.html" %}
 {% block title %}View{% endblock %}
@@ -29,33 +17,29 @@
 {% if session.user_id %}
 {% if expenses %}
 <h2>Sinun kaikki menosi:</h2><hr>
-<div class="view">
-   <div class="wrapper"> 
-     <table class="table">
-       <thead>
-         <tr>
-           <th class="sticky-col col"></th>
-           <th class="sticky-col col">Kategoria</th>
-           <th class="sticky-col col">Menon hinta</th>
-           <th class="sticky-col col">Päivämäärä</th>
-           <th>Lisätietoja</th>
-        </tr>
-       </thead>
-        <tbody>
-      {% for expense in expenses %}
-        <tr>
-         <th class="sticky-col col">
-            <form action="/delete_expense?id={{ expense.id }}"
-            method="POST">
-            <input type="submit" value="Poista"></form></th>
-         <th class="sticky-col col">{{ expense.name }}</th>
-         <th class="sticky-col col">{{ expense.price }}</th>
-         <th class="sticky-col col">{{ expense.date }}</th>
-         <th>{{ expense.notes }}</th>
-        </tr>
-        {% endfor %}
-       </tbody>
-     </table>
-   </div>
- </div>  
+<table class="table">
+   <thead>
+   <tr>
+      <th></th>
+      <th>Kategoria</th>
+      <th>Menon hinta</th>
+      <th>Päivämäärä</th>
+      <th>Lisätietoja</th>
+   </tr>
+   </thead>
+   <tbody>
+{% for expense in expenses %}
+   <tr>
+   <td>
+      <form action="/delete_expense?id={{ expense.id }}"
+      method="POST">
+      <input type="submit" value="Poista"></form></td>
+   <td>{{ expense.name }}</td>
+   <td>{{ expense.price }}</td>
+   <td>{{ expense.date }}</td>
+   <td>{{ expense.notes }}</td>
+   </tr>
+   {% endfor %}
+   </tbody>
+</table><hr>
 {% endif %}{% endif %}{% endblock %}

@@ -40,7 +40,8 @@ def get_all_expenses(user_id):
     sql = text("SELECT E.price, C.name, E.date, E.notes, E.id \
             FROM expenses E INNER JOIN categories C ON C.id = E.category_id \
             WHERE E.user_id=:user_id AND E.visible=TRUE \
-            GROUP BY E.price, C.name, E.date, E.notes, E.id ORDER BY E.date ")
+            GROUP BY E.price, C.name, E.date, E.notes, E.id \
+            ORDER BY E.date DESC")
     result = db.session.execute(sql, {"user_id":user_id})
     expenses = result.fetchall()
     return expenses
