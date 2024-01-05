@@ -5,7 +5,7 @@
 }
 .box {
     float: left;
-    width: 500px;
+    width: 800px;
     margin-left: 10px;
     margin-top: 10px;
     padding: 5px;
@@ -48,6 +48,17 @@
         {% if expenses_sum %}
         <ul>
             <li><a href="/view_expenses">Tutki menoja</a>
+        </ul>
+        {% endif %}
+    </div>
+    <div class="invisible_box">
+        <h3>Hallinnoi tulevia menoja</h3>
+        <ul>
+            <li><a href="/new_future_expense">Lisää tuleva meno</a>
+        </ul>
+        {% if expenses_sum %}
+        <ul>
+            <li><a href="/view_future_expenses">Tutki tulevia menoja</a>
         </ul>
         {% endif %}
     </div>

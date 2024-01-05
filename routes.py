@@ -190,3 +190,19 @@ def delete_budget():
         return redirect("/budgets")
     return render_template("error_logged_in.html",
                             message="Budjetin poistaminen ei onnistunut")
+
+
+@app.route("/new_future_expense", methods=["GET", "POST"])
+def future_expenses():
+    if not session.get("logged_in"):
+        return render_template("error.html",
+                               message="Et ole kirjautunut sisään!")
+    
+    user_id = session.get("user_id")
+    if request.method == "GET":
+        if categories.check_categories_exist(user_id):
+            user_categories = categories.get_all_categories(user_id)
+            return render_template("new_future_expense.html",
+                                   categories=user_categories)
+        return render_template("error_logged_in.html",
+                                message="Lisää ensin kategoria")
