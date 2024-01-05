@@ -98,7 +98,7 @@ def new_expense():
         return render_template("error_logged_in.html",
                                 message="Menon lisääminen ei onnistunut")
 
-@app.route("/view_expenses", methods=["GET", "POST"])
+@app.route("/view_expenses", methods=["GET"])
 def view_expenses():
     if not session.get("logged_in"):
         return render_template("error.html",
@@ -110,17 +110,8 @@ def view_expenses():
             return render_template("view_expenses.html", expenses=user_expenses)
         return render_template("error_logged_in.html",
                                 message="Lisää ensin meno")
-    if request.method == "POST":
-        price = request.form["price"]
-        date = request.form["date"]
-        category_id  = request.form["category"]
-        notes = request.form["notes"]
-        if expenses.add_expense(price, category_id, date, notes, user_id):
-            return redirect("/")
-        return render_template("error_logged_in.html",
-                                message="Menon lisääminen ei onnistunut")
 
-@app.route("/delete_expense", methods=["GET", "POST"])
+@app.route("/delete_expense", methods=["POST"])
 def delete_expense():
     if not session.get("logged_in"):
         return render_template("error.html",
@@ -190,7 +181,6 @@ def delete_budget():
         return redirect("/budgets")
     return render_template("error_logged_in.html",
                             message="Budjetin poistaminen ei onnistunut")
-
 
 @app.route("/new_future_expense", methods=["GET", "POST"])
 def new_future_expense():
