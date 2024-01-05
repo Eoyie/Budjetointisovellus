@@ -2,7 +2,7 @@
 {% block title %}Expences{% endblock %}
 {% block content %}
 {% if session.user_id %}
-<form action="/new_expense" method="post" onsubmit="return check(this)">
+<form action="/new_future_expense" method="post" onsubmit="return check(this)">
     <p>Menon hinta:<br>
     <input type="text" name="price" required></p>
     Kategoria:

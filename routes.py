@@ -1,6 +1,6 @@
 from flask import redirect, render_template, request, session
 from app import app
-import users, categories, expenses, budgets
+import users, categories, expenses, budgets, future_expenses
 
 @app.route("/")
 def index():
@@ -193,11 +193,11 @@ def delete_budget():
 
 
 @app.route("/new_future_expense", methods=["GET", "POST"])
-def future_expenses():
+def new_future_expense():
     if not session.get("logged_in"):
         return render_template("error.html",
                                message="Et ole kirjautunut sisään!")
-    
+
     user_id = session.get("user_id")
     if request.method == "GET":
         if categories.check_categories_exist(user_id):
@@ -206,3 +206,16 @@ def future_expenses():
                                    categories=user_categories)
         return render_template("error_logged_in.html",
                                 message="Lisää ensin kategoria")
+    if request.method == "POST":
+        price = request.form["price"]
+        category_id  = request.form["category"]
+        notes = request.form["notes"]
+        if not future_expenses.check_price(price):
+            return render_template("error_logged_in.html",
+                                message="Menon hinta tulee olla positiivinen\
+                                        kokonaisluku.")
+        if future_expenses.add_future_expense(price, category_id, notes, user_id):
+            return redirect("/")
+        return render_template("error_logged_in.html",
+                                message="Tulevan menon lisääminen ei onnistunut")
+        
