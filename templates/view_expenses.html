@@ -1,16 +1,61 @@
+<style>
+.view {
+   margin: auto;
+   width: 1600px;
+}
+ 
+.wrapper {
+   position: relative;
+   overflow: auto;
+   border: 1px solid black;
+   white-space: nowrap;
+}
+ 
+.sticky-col {
+   position: sticky;
+   position: -webkit-sticky;    
+   background-color: white;
+}
+
+.col {
+   width: 150px;
+   min-width: 150px;
+   max-width: 150px; 
+}
+</style>
 {% extends "layout_logged_in.html" %}
 {% block title %}View{% endblock %}
 {% block content %}
 {% if session.user_id %}
 {% if expenses %}
 <h2>Sinun kaikki menosi:</h2><hr>
-{% for expense in expenses %}
-Menon kategoria: {{ expense.name }}<br>
-Menon hinta: {{ expense.price }}<br>
-Päivämäärä: {{ expense.date }}<br>
-Lisätietoja: {{ expense.notes }}<br>
-<form action="/delete_expense?id={{ expense.id }}"
-method="POST">
-   <input type="submit" value="Poista"><br>
-</form><hr>
-{% endfor %}{% endif %}{% endif %}{% endblock %}
+<div class="view">
+   <div class="wrapper"> 
+     <table class="table">
+       <thead>
+         <tr>
+           <th class="sticky-col col"></th>
+           <th class="sticky-col col">Kategoria</th>
+           <th class="sticky-col col">Menon hinta</th>
+           <th class="sticky-col col">Päivämäärä</th>
+           <th>Lisätietoja</th>
+        </tr>
+       </thead>
+        <tbody>
+      {% for expense in expenses %}
+        <tr>
+         <th class="sticky-col col">
+            <form action="/delete_expense?id={{ expense.id }}"
+            method="POST">
+            <input type="submit" value="Poista"></form></th>
+         <th class="sticky-col col">{{ expense.name }}</th>
+         <th class="sticky-col col">{{ expense.price }}</th>
+         <th class="sticky-col col">{{ expense.date }}</th>
+         <th>{{ expense.notes }}</th>
+        </tr>
+        {% endfor %}
+       </tbody>
+     </table>
+   </div>
+ </div>  
+{% endif %}{% endif %}{% endblock %}
