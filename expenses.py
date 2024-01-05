@@ -11,18 +11,14 @@ def check_price(price):
 def add_expense(price, category_id, date, notes, user_id):
     visible = True
     try:
-        float(price)
-        try:
-            sql = text("INSERT INTO expenses \
-                       (price,category_id,date,notes,user_id,visible) \
-                       VALUES \
-                       (:price,:category_id,:date,:notes,:user_id,:visible)")
-            db.session.execute(sql, {"price":price, "category_id":category_id,
-                                     "date":date, "notes":notes,
-                                     "user_id":user_id,"visible":visible})
-            db.session.commit()
-        except:
-            return False
+        sql = text("INSERT INTO expenses \
+                    (price,category_id,date,notes,user_id,visible) \
+                    VALUES \
+                    (:price,:category_id,:date,:notes,:user_id,:visible)")
+        db.session.execute(sql, {"price":price, "category_id":category_id,
+                                    "date":date, "notes":notes,
+                                    "user_id":user_id,"visible":visible})
+        db.session.commit()
     except:
         return False
     return True
