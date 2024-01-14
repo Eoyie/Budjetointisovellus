@@ -222,3 +222,15 @@ def view_future_expenses():
                                    expenses=user_f_expenses)
         return render_template("error_logged_in.html",
                                 message="Lisää ensin tuleva meno")
+
+@app.route("/delete_future_expense", methods=["POST"])
+def delete_future_expense():
+    if not session.get("logged_in"):
+        return render_template("error.html",
+                               message="Et ole kirjautunut sisään!")
+    user_id = session.get("user_id")
+    expense_id = request.args.get("id")
+    if future_expenses.delete_from_view(user_id, expense_id):
+        return redirect("/view_future_expenses")
+    return render_template("error_logged_in.html",
+                            message="Menon poistaminen ei onnistunut")

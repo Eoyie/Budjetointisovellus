@@ -39,3 +39,13 @@ def get_all_future_expenses(user_id):
     result = db.session.execute(sql, {"user_id":user_id})
     expenses = result.fetchall()
     return expenses
+
+def delete_from_view(user_id, expense_id):
+    try:
+        sql = text("UPDATE future_expenses SET visible=FALSE\
+                        WHERE user_id=:user_id AND id=:expense_id")
+        db.session.execute(sql, {"user_id":user_id, "expense_id":expense_id})
+        db.session.commit()
+    except:
+        return False
+    return True
