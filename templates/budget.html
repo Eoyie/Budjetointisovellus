@@ -13,7 +13,8 @@
     Budjetin määrä: <input type="text" name="budget" required>
     Budjetointi kuukausi: <input type="month" name="month" required>
     <input type="submit" value="Lisää budjetti">
-    </form>
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
 <hr>
 <h3>Sinun budjetit:</h3><br>
 <ul>
@@ -26,6 +27,7 @@
                 <form action="/delete_budget?id={{ budget.id }}"
                  method="POST">
                     <input type="submit" value="Poista">
+                    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
                 </form>
             </div>
         {% endfor %}

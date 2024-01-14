@@ -33,7 +33,8 @@ tr:nth-child(even) {
    <td>
       <form action="/delete_expense?id={{ expense.id }}"
       method="POST">
-      <input type="submit" value="Poista"></form></td>
+      <input type="submit" value="Poista">
+      <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"></form></td>
    <td>{{ expense.name }}</td>
    <td>{{ expense.price }}</td>
    <td>{{ expense.date }}</td>

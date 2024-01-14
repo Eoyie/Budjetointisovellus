@@ -17,7 +17,8 @@
 <form action="/categories" method="post" onsubmit="return check(this)">
     Kategorian nimi: <input type="text" name="name" required>
     <input type="submit" name="action" value="Lisaa kategoria">
-    </form>
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
 </div>
 {% if categories %}
 <div class="invisible_box">
@@ -29,7 +30,8 @@
         {% endfor %}
         </select></p>
     <input type="submit" name="action" value="Poista kategoria">
-    </form>
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
 </div>
 <div class="space"></div>
 <hr>
