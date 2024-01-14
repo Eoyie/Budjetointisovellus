@@ -22,9 +22,18 @@ def add_future_expense(price, category_id, notes, user_id):
         return False
     return True
 
+def check_future_expenses_exist(user_id):
+    sql = text("SELECT user_id FROM future_expenses WHERE user_id=:user_id \
+                AND visible=TRUE")
+    result = db.session.execute(sql, {"user_id":user_id})
+    expenses = result.fetchone()
+    if not expenses:
+        return False
+    return True
+
 def get_all_future_expenses(user_id):
     sql = text("SELECT E.price, C.name, E.notes, E.id \
-            FROM expenses E INNER JOIN categories C ON C.id = E.category_id \
+            FROM future_expenses E INNER JOIN categories C ON C.id = E.category_id \
             WHERE E.user_id=:user_id AND E.visible=TRUE \
             GROUP BY E.price, C.name, E.notes, E.id")
     result = db.session.execute(sql, {"user_id":user_id})

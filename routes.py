@@ -208,4 +208,17 @@ def new_future_expense():
             return redirect("/")
         return render_template("error_logged_in.html",
                                 message="Tulevan menon lisääminen ei onnistunut")
-        
+
+@app.route("/view_future_expenses", methods=["GET"])
+def view_future_expenses():
+    if not session.get("logged_in"):
+        return render_template("error.html",
+                               message="Et ole kirjautunut sisään!")
+    user_id = session.get("user_id")
+    if request.method == "GET":
+        if future_expenses.check_future_expenses_exist(user_id):
+            user_f_expenses = future_expenses.get_all_future_expenses(user_id)
+            return render_template("view_future_expenses.html", 
+                                   expenses=user_f_expenses)
+        return render_template("error_logged_in.html",
+                                message="Lisää ensin tuleva meno")
