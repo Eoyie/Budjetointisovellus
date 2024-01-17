@@ -262,4 +262,43 @@ def delete_future_expense():
     if future_expenses.delete_from_view(user_id, expense_id):
         return redirect("/view_future_expenses")
     return render_template("error_logged_in.html",
-                            message="Menon poistaminen ei onnistunut")
+                            message="Tulevan menon poistaminen ei onnistunut")
+
+@app.route("/move_future_expense", methods=["POST"])
+def move_future_expense():
+    if not session.get("logged_in"):
+        return render_template("error.html",
+                               message="Et ole kirjautunut sisään!")
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
+    user_id = session.get("user_id")
+    expense_id = request.args.get("id")
+    exp_info = future_expenses.get_future_expense(user_id, expense_id)
+    return render_template("move_future_expense.html", exp_id=expense_id,
+                           price=exp_info[0], category=exp_info[1],
+                           notes=exp_info[2], category_id=exp_info[3])
+
+@app.route("/new_moved_expense", methods=["POST"])
+def new_moved_expense():
+    if not session.get("logged_in"):
+        return render_template("error.html",
+                               message="Et ole kirjautunut sisään!")
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
+    user_id = session.get("user_id")
+    old_future_expense_id = request.form["expense_id"]
+    price = request.form["price"]
+    date = request.form["date"]
+    category_id  = request.form["category"]
+    notes = request.form["notes"]
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
+    if not expenses.check_price(price):
+        return render_template("error_logged_in.html",
+                            message="Menon hinta tulee olla positiivinen\
+                                    kokonaisluku.")
+    if future_expenses.delete_from_view(user_id, old_future_expense_id):
+        if expenses.add_expense(price, category_id, date, notes, user_id):
+            return redirect("/view_expenses")
+    return render_template("error_logged_in.html",
+                            message="Menon siirtäminen ei onnistunut")

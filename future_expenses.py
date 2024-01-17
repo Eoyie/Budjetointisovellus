@@ -42,10 +42,19 @@ def get_all_future_expenses(user_id):
 
 def delete_from_view(user_id, expense_id):
     try:
-        sql = text("UPDATE future_expenses SET visible=FALSE\
+        sql = text("UPDATE future_expenses SET visible=FALSE \
                         WHERE user_id=:user_id AND id=:expense_id")
         db.session.execute(sql, {"user_id":user_id, "expense_id":expense_id})
         db.session.commit()
     except:
         return False
     return True
+
+def get_future_expense(user_id, expense_id):
+    sql = text("SELECT E.price, C.name, E.notes, C.id \
+            FROM future_expenses E INNER JOIN categories C ON C.id = E.category_id \
+            WHERE E.user_id=:user_id AND E.visible=TRUE AND E.id=:expense_id \
+            GROUP BY E.price, C.name, E.notes, C.id")
+    result = db.session.execute(sql, {"user_id":user_id, "expense_id":expense_id})
+    expense = result.fetchone()
+    return expense

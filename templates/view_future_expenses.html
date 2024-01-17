@@ -1,44 +1,50 @@
 <style>
-    table { 
-       border-collapse: collapse; 
-       width: 100%; 
-    }
-    th, td { 
-       text-align: left; 
-       padding: 8px; 
-    } 
-    tr:nth-child(even) { 
-       background-color: Lightgrey; 
-    } 
-    </style>
-    {% extends "layout_logged_in.html" %}
-    {% block title %}View{% endblock %}
-    {% block content %}
-    {% if session.user_id %}
-    {% if expenses %}
-    <h2>Sinun tulevat menosi:</h2><hr>
-    <table class="table">
-       <thead>
-       <tr>
-          <th></th>
-          <th>Kategoria</th>
-          <th>Menon hinta</th>
-          <th>Lisätietoja</th>
-       </tr>
-       </thead>
-       <tbody>
-    {% for expense in expenses %}
-       <tr>
-       <td>
-          <form action="/delete_future_expense?id={{ expense.id }}"
-          method="POST">
-          <input type="submit" value="Poista">
-          <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"></form></td>
-       <td>{{ expense.name }}</td>
-       <td>{{ expense.price }}</td>
-       <td>{{ expense.notes }}</td>
-       </tr>
-       {% endfor %}
-       </tbody>
-    </table><hr>
-    {% endif %}{% endif %}{% endblock %}
+table { 
+   border-collapse: collapse; 
+   width: 100%; 
+}
+th, td { 
+   text-align: left; 
+   padding: 8px; 
+} 
+tr:nth-child(even) { 
+   background-color: Lightgrey; 
+} 
+</style>
+{% extends "layout_logged_in.html" %}
+{% block title %}View{% endblock %}
+{% block content %}
+{% if session.user_id %}
+{% if expenses %}
+<h2>Sinun tulevat menosi:</h2><hr>
+<table class="table">
+   <thead>
+   <tr>
+      <th></th>
+      <th></th>
+      <th>Kategoria</th>
+      <th>Menon hinta</th>
+      <th>Lisätietoja</th>
+   </tr>
+   </thead>
+   <tbody>
+{% for expense in expenses %}
+   <tr>
+   <td>
+      <form action="/delete_future_expense?id={{ expense.id }}"
+      method="POST">
+      <input type="submit" value="Poista">
+      <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"></form></td>
+   <td>
+      <form action="/move_future_expense?id={{ expense.id }}"
+      method="POST">
+      <input type="submit" value="Siirrä menneeksi">
+      <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"></form></td>
+   <td>{{ expense.name }}</td>
+   <td>{{ expense.price }}</td>
+   <td>{{ expense.notes }}</td>
+   </tr>
+   {% endfor %}
+   </tbody>
+</table><hr>
+{% endif %}{% endif %}{% endblock %}
