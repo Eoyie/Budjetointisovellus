@@ -103,19 +103,26 @@ def new_expense():
         return render_template("error_logged_in.html",
                                 message="Menon lisääminen ei onnistunut")
 
-@app.route("/view_expenses", methods=["GET"])
+@app.route("/view_expenses", methods=["GET", "POST"])
 def view_expenses():
     if not session.get("logged_in"):
         return render_template("error.html",
                                message="Et ole kirjautunut sisään!")
     user_id = session.get("user_id")
     if request.method == "GET":
-        if expenses.check_expenses_exist(user_id):
-            user_expenses = expenses.get_all_expenses(user_id)
-            return render_template("view_expenses.html", expenses=user_expenses)
-        return render_template("error_logged_in.html",
-                                message="Lisää ensin meno")
-
+        user_expenses = expenses.get_all_expenses(user_id)
+        return render_template("view_expenses.html", expenses=user_expenses)
+    if request.method == "POST":
+        month = request.form["month"]
+        if session["csrf_token"] != request.form["csrf_token"]:
+            abort(403)
+        if not expenses.check_month(month):
+            return render_template("error_logged_in.html",
+                    message="Kuukausi haku ei onnistunut: vuosi liian suuri")
+        user_expenses = expenses.get_month_expenses(user_id, month)
+        return render_template("view_expenses.html", expenses=user_expenses,
+                               month=True)
+    
 @app.route("/delete_expense", methods=["POST"])
 def delete_expense():
     if not session.get("logged_in"):
@@ -126,6 +133,11 @@ def delete_expense():
     user_id = session.get("user_id")
     expense_id = request.args.get("id")
     if expenses.delete_from_view(user_id, expense_id):
+        if request.form["month"]:
+            month = expenses.change_date_format(request.form["date"])
+            user_expenses = expenses.get_month_expenses(user_id, month)
+            return render_template("view_expenses.html", expenses=user_expenses,
+                               month=True)
         return redirect("/view_expenses")
     return render_template("error_logged_in.html",
                             message="Menon poistaminen ei onnistunut")

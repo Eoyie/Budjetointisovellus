@@ -1,5 +1,4 @@
 from db import db
-from flask import session
 from sqlalchemy.sql import text
 from datetime import datetime
 
@@ -7,6 +6,17 @@ def check_price(price):
     if price.isnumeric():
         return True
     return False
+
+def check_month(date):
+    try:
+        date = datetime.strptime(date, "%Y-%m")
+    except:
+        return False
+    return True
+
+def change_date_format(date):
+    date = datetime.strptime(date, "%Y-%m-%d")
+    return date.strftime("%Y-%m")
 
 def add_expense(price, category_id, date, notes, user_id):
     visible = True
@@ -42,12 +52,22 @@ def get_all_expenses(user_id):
     expenses = result.fetchall()
     return expenses
 
-def get_sum_expenses(user_id):
-    sql = text("SELECT SUM(price) FROM expenses \
-                WHERE user_id=:user_id AND visible=TRUE")
-    result = db.session.execute(sql, {"user_id":user_id})
-    expenses_sum = result.fetchone()[0]
-    return expenses_sum
+def get_month_expenses(user_id, date):
+    date = datetime.strptime(date, "%Y-%m")
+    month = date.month
+    year = date.year
+    sql = text("SELECT E.price, C.name, E.date, E.notes, E.id \
+                FROM \
+                expenses E INNER JOIN categories C ON C.id = E.category_id \
+                WHERE \
+                E.user_id=:user_id AND EXTRACT(MONTH FROM E.date)=:month \
+                AND EXTRACT(YEAR FROM E.date)=:year AND E.visible=TRUE \
+                GROUP BY E.price, C.name, E.date, E.notes, E.id \
+                ORDER BY E.date DESC")
+    result = db.session.execute(sql, {"user_id":user_id, "month":month,
+                                      "year":year})
+    expenses = result.fetchall()
+    return expenses
 
 def get_this_month_sum_expenses(user_id):
     month = datetime.now().month

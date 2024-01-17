@@ -15,8 +15,16 @@ tr:nth-child(even) {
 {% block title %}View{% endblock %}
 {% block content %}
 {% if session.user_id %}
-{% if expenses %}
-<h2>Sinun kaikki menosi:</h2><hr>
+<h2>Sinun menosi:</h2>
+{% if month %}
+<a href="/view_expenses">Palaa koko listaan</a>
+{% endif %}
+<form action="/view_expenses" method="post">
+   Kuukausi: <input type="month" name="month" required>
+   <input type="submit" value="Valitse kuukausi">
+   <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
+<hr>
 <table class="table">
    <thead>
    <tr>
@@ -28,13 +36,16 @@ tr:nth-child(even) {
    </tr>
    </thead>
    <tbody>
+{% if expenses %}
 {% for expense in expenses %}
    <tr>
    <td>
       <form action="/delete_expense?id={{ expense.id }}"
       method="POST">
       <input type="submit" value="Poista">
-      <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"></form></td>
+      <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+      <input type="hidden" name="month" value="{{ month }}">
+      <input type="hidden" name="date" value="{{ expense.date }}"></form></td>
    <td>{{ expense.name }}</td>
    <td>{{ expense.price }}</td>
    <td>{{ expense.date }}</td>
