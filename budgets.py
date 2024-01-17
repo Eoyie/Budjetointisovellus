@@ -33,16 +33,13 @@ def add_budget(amount, date, user_id):
 def this_month_budget(user_id):
     month = datetime.now().month
     year = datetime.now().year
-    try:
-        sql = text("SELECT amount, date, id FROM budgets WHERE user_id=:user_id \
-                    AND EXTRACT(MONTH FROM date)=:month AND \
-                    EXTRACT(YEAR FROM date)=:year AND visible=TRUE")
-        result = db.session.execute(sql, {"user_id":user_id, "month":month,
-                                          "year":year})
-        budgets = result.fetchall()
-        return budgets[0]
-    except:
-        return False
+    sql = text("SELECT amount, date, id FROM budgets WHERE user_id=:user_id \
+                AND EXTRACT(MONTH FROM date)=:month AND \
+                EXTRACT(YEAR FROM date)=:year AND visible=TRUE")
+    result = db.session.execute(sql, {"user_id":user_id, "month":month,
+                                        "year":year})
+    budgets = result.fetchall()
+    return budgets[0]
 
 def get_all_budgets(user_id):
     sql = text("SELECT amount, TO_CHAR(date, 'MM-YYYY') as month, id \
@@ -71,7 +68,7 @@ def update_budget(amount, date, user_id):
 def delete_from_view(user_id, budget_id):
     try:
         sql = text("UPDATE budgets SET visible=FALSE\
-                        WHERE user_id=:user_id AND id=:budget_id")
+                    WHERE user_id=:user_id AND id=:budget_id")
         db.session.execute(sql, {"user_id":user_id, "budget_id":budget_id})
         db.session.commit()
     except:
