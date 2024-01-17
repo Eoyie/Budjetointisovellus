@@ -1,0 +1,36 @@
+{% extends "layout_logged_in.html" %}
+{% block title %}Expences{% endblock %}
+{% block content %}
+{% if session.user_id %}
+<form action="/new_expense" method="post" onsubmit="return check(this)">
+    <p>Menon hinta:<br>
+    <input type="text" name="price" value={{ price }} required></p>
+    <p>Päivämäärä:
+    <input type="date" name="date" value={{ date }} required> <br>
+    Kategoria: {{ category }}
+    <p>Lisätietoja:<br>
+    <textarea name="notes" calue={{ notes }} rows="3" cols="40">
+    </textarea></p>
+    <input type="submit" value="Lähetä">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+    <input type="hidden" name="category" value="{{ category_id }}">
+    </form>
+    <script>
+        function check(form) {
+            if (form.price.value.length > 10) {
+                alert("Hinta on liian suuri");
+                return false;
+            }
+            if (form.notes.value.length > 100) {
+                alert("Lisätiedot on liian pitkä");
+                return false;
+            }
+            if (isNaN(form.price.value)) {
+                alert("Annettu hinta ei ole numero");
+                return false;
+            }
+            return true;
+        }
+    </script>
+{% endif %}
+{% endblock %}
