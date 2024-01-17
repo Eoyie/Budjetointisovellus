@@ -38,11 +38,7 @@ def get_category_id(name, user_id):
     return category_id
 
 def delete_from_view(user_id, category_id):
-    try:
-        sql = text("UPDATE categories SET visible=FALSE\
-                        WHERE user_id=:user_id AND id=:category_id")
-        db.session.execute(sql, {"user_id":user_id, "category_id":category_id})
-        db.session.commit()
-    except:
-        return False
-    return True
+    sql = text("UPDATE categories SET visible=FALSE\
+                WHERE user_id=:user_id AND id=:category_id")
+    db.session.execute(sql, {"user_id":user_id, "category_id":category_id})
+    db.session.commit()

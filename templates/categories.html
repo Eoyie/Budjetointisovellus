@@ -16,7 +16,7 @@
 <h3>Lisää kategoria</h3><br>
 <form action="/categories" method="post" onsubmit="return check(this)">
     Kategorian nimi: <input type="text" name="name" required>
-    <input type="submit" name="action" value="Lisaa kategoria">
+    <input type="submit" name="action" value="Lisää kategoria">
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 </div>

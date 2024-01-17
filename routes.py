@@ -132,15 +132,13 @@ def delete_expense():
         abort(403)
     user_id = session.get("user_id")
     expense_id = request.args.get("id")
-    if expenses.delete_from_view(user_id, expense_id):
-        if request.form["month"]:
-            month = expenses.change_date_format(request.form["date"])
-            user_expenses = expenses.get_month_expenses(user_id, month)
-            return render_template("view_expenses.html", expenses=user_expenses,
-                               month=True)
-        return redirect("/view_expenses")
-    return render_template("error_logged_in.html",
-                            message="Menon poistaminen ei onnistunut")
+    expenses.delete_from_view(user_id, expense_id)
+    if request.form["month"]:
+        month = expenses.change_date_format(request.form["date"])
+        user_expenses = expenses.get_month_expenses(user_id, month)
+        return render_template("view_expenses.html", expenses=user_expenses,
+                            month=True)
+    return redirect("/view_expenses")
 
 @app.route("/categories", methods=["GET", "POST"])
 def manage_categories():
@@ -154,18 +152,17 @@ def manage_categories():
     if request.method == "POST":
         if session["csrf_token"] != request.form["csrf_token"]:
             abort(403)
-        if request.form["action"] == "Lisaa kategoria":
+        if request.form["action"] == "Lisää kategoria":
             name = request.form["name"]
             if categories.add_category(name, user_id):
                 return redirect("/categories")
             return render_template("error_logged_in.html",
                                     message="Kategorian lisäys ei onnistunut")
         category_id = request.form["category"]
-        if categories.delete_from_view(user_id, category_id):
-            if expenses.delete_all_type_from_view(user_id, category_id):
-                return redirect("/categories")
-        return render_template("error_logged_in.html",
-                                message="Kategorian poisto ei onnistunut")
+        categories.delete_from_view(user_id, category_id)
+        expenses.delete_all_type_from_view(user_id, category_id)
+        future_expenses.delete_all_type_from_view(user_id, category_id)
+        return redirect("/categories")
 
 @app.route("/budgets", methods=["GET", "POST"])
 def manage_budgets():
@@ -202,10 +199,8 @@ def delete_budget():
         abort(403)
     user_id = session.get("user_id")
     budget_id = request.args.get("id")
-    if budgets.delete_from_view(user_id, budget_id):
-        return redirect("/budgets")
-    return render_template("error_logged_in.html",
-                            message="Budjetin poistaminen ei onnistunut")
+    budgets.delete_from_view(user_id, budget_id)
+    return redirect("/budgets")
 
 @app.route("/new_future_expense", methods=["GET", "POST"])
 def new_future_expense():
@@ -259,10 +254,8 @@ def delete_future_expense():
         abort(403)
     user_id = session.get("user_id")
     expense_id = request.args.get("id")
-    if future_expenses.delete_from_view(user_id, expense_id):
-        return redirect("/view_future_expenses")
-    return render_template("error_logged_in.html",
-                            message="Tulevan menon poistaminen ei onnistunut")
+    future_expenses.delete_from_view(user_id, expense_id)
+    return redirect("/view_future_expenses")
 
 @app.route("/move_future_expense", methods=["POST"])
 def move_future_expense():
@@ -297,8 +290,8 @@ def new_moved_expense():
         return render_template("error_logged_in.html",
                             message="Menon hinta tulee olla positiivinen\
                                     kokonaisluku.")
-    if future_expenses.delete_from_view(user_id, old_future_expense_id):
-        if expenses.add_expense(price, category_id, date, notes, user_id):
-            return redirect("/view_expenses")
+    future_expenses.delete_from_view(user_id, old_future_expense_id)
+    if expenses.add_expense(price, category_id, date, notes, user_id):
+        return redirect("/view_expenses")
     return render_template("error_logged_in.html",
                             message="Menon siirtäminen ei onnistunut")

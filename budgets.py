@@ -66,11 +66,7 @@ def update_budget(amount, date, user_id):
     return True
 
 def delete_from_view(user_id, budget_id):
-    try:
-        sql = text("UPDATE budgets SET visible=FALSE\
-                    WHERE user_id=:user_id AND id=:budget_id")
-        db.session.execute(sql, {"user_id":user_id, "budget_id":budget_id})
-        db.session.commit()
-    except:
-        return False
-    return True
+    sql = text("UPDATE budgets SET visible=FALSE\
+                WHERE user_id=:user_id AND id=:budget_id")
+    db.session.execute(sql, {"user_id":user_id, "budget_id":budget_id})
+    db.session.commit()

@@ -96,21 +96,13 @@ def get_this_month_expenses_by_category(user_id):
     return expenses
 
 def delete_all_type_from_view(user_id, category_id):
-    try:
-        sql = text("UPDATE expenses SET visible=FALSE \
-                    WHERE user_id=:user_id AND category_id=:category_id")
-        db.session.execute(sql, {"user_id":user_id, "category_id":category_id})
-        db.session.commit()
-    except:
-        return False
-    return True
+    sql = text("UPDATE expenses SET visible=FALSE \
+                WHERE user_id=:user_id AND category_id=:category_id")
+    db.session.execute(sql, {"user_id":user_id, "category_id":category_id})
+    db.session.commit()
 
 def delete_from_view(user_id, expense_id):
-    try:
-        sql = text("UPDATE expenses SET visible=FALSE\
-                        WHERE user_id=:user_id AND id=:expense_id")
-        db.session.execute(sql, {"user_id":user_id, "expense_id":expense_id})
-        db.session.commit()
-    except:
-        return False
-    return True
+    sql = text("UPDATE expenses SET visible=FALSE\
+                WHERE user_id=:user_id AND id=:expense_id")
+    db.session.execute(sql, {"user_id":user_id, "expense_id":expense_id})
+    db.session.commit()

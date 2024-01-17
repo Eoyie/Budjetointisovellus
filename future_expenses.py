@@ -31,6 +31,15 @@ def check_future_expenses_exist(user_id):
         return False
     return True
 
+def get_future_expense(user_id, expense_id):
+    sql = text("SELECT E.price, C.name, E.notes, C.id \
+            FROM future_expenses E INNER JOIN categories C ON C.id = E.category_id \
+            WHERE E.user_id=:user_id AND E.visible=TRUE AND E.id=:expense_id \
+            GROUP BY E.price, C.name, E.notes, C.id")
+    result = db.session.execute(sql, {"user_id":user_id, "expense_id":expense_id})
+    expense = result.fetchone()
+    return expense
+
 def get_all_future_expenses(user_id):
     sql = text("SELECT E.price, C.name, E.notes, E.id \
             FROM future_expenses E INNER JOIN categories C ON C.id = E.category_id \
@@ -41,20 +50,13 @@ def get_all_future_expenses(user_id):
     return expenses
 
 def delete_from_view(user_id, expense_id):
-    try:
-        sql = text("UPDATE future_expenses SET visible=FALSE \
-                        WHERE user_id=:user_id AND id=:expense_id")
-        db.session.execute(sql, {"user_id":user_id, "expense_id":expense_id})
-        db.session.commit()
-    except:
-        return False
-    return True
+    sql = text("UPDATE future_expenses SET visible=FALSE \
+                WHERE user_id=:user_id AND id=:expense_id")
+    db.session.execute(sql, {"user_id":user_id, "expense_id":expense_id})
+    db.session.commit()
 
-def get_future_expense(user_id, expense_id):
-    sql = text("SELECT E.price, C.name, E.notes, C.id \
-            FROM future_expenses E INNER JOIN categories C ON C.id = E.category_id \
-            WHERE E.user_id=:user_id AND E.visible=TRUE AND E.id=:expense_id \
-            GROUP BY E.price, C.name, E.notes, C.id")
-    result = db.session.execute(sql, {"user_id":user_id, "expense_id":expense_id})
-    expense = result.fetchone()
-    return expense
+def delete_all_type_from_view(user_id, category_id):
+    sql = text("UPDATE future_expenses SET visible=FALSE \
+                WHERE user_id=:user_id AND category_id=:category_id")
+    db.session.execute(sql, {"user_id":user_id, "category_id":category_id})
+    db.session.commit()
