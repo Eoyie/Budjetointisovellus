@@ -237,13 +237,9 @@ def view_future_expenses():
         return render_template("error.html",
                                message="Et ole kirjautunut sisään!")
     user_id = session.get("user_id")
-    if request.method == "GET":
-        if future_expenses.check_future_expenses_exist(user_id):
-            user_f_expenses = future_expenses.get_all_future_expenses(user_id)
-            return render_template("view_future_expenses.html", 
-                                   expenses=user_f_expenses)
-        return render_template("error_logged_in.html",
-                                message="Lisää ensin tuleva meno")
+    user_future_expenses = future_expenses.get_all_future_expenses(user_id)
+    return render_template("view_future_expenses.html",
+                            expenses=user_future_expenses)
 
 @app.route("/delete_future_expense", methods=["POST"])
 def delete_future_expense():

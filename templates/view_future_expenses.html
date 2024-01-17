@@ -15,7 +15,6 @@ tr:nth-child(even) {
 {% block title %}View{% endblock %}
 {% block content %}
 {% if session.user_id %}
-{% if expenses %}
 <h2>Sinun tulevat menosi:</h2><hr>
 <table class="table">
    <thead>
@@ -28,6 +27,7 @@ tr:nth-child(even) {
    </tr>
    </thead>
    <tbody>
+{% if expenses %}
 {% for expense in expenses %}
    <tr>
    <td>
