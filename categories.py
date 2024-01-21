@@ -14,6 +14,18 @@ def add_category(name, user_id):
         return False
     return True
 
+def check_category_already_exists(user_id, category_name):
+    sql = text("SELECT id FROM categories \
+                WHERE user_id=:user_id AND name=:category_name\
+                AND visible=TRUE")
+    result = db.session.execute(sql, {"user_id":user_id, 
+                                      "category_name":category_name})
+    category = result.fetchone()
+    if not category:
+        return False
+    return True
+    
+
 def check_categories_exist(user_id):
     sql = text("SELECT name FROM categories WHERE user_id=:user_id \
                 AND visible=TRUE")

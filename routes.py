@@ -154,6 +154,9 @@ def manage_categories():
             abort(403)
         if request.form["action"] == "Lisää kategoria":
             name = request.form["name"]
+            if categories.check_category_already_exists(user_id, name):
+                return render_template("error_logged_in.html",
+                                    message="Kategoria on jo olemassa")
             if categories.add_category(name, user_id):
                 return redirect("/categories")
             return render_template("error_logged_in.html",
