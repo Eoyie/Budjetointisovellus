@@ -1,11 +1,19 @@
 <!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-
 <title>Budjetointisovellus - {% block title %}{% endblock %}</title>
-<h1>Budjetointisovellus ver. 2</h1>
-<a href="/">Etusivu</a> *
-<a href="/categories">Kategoria asetukset</a> *
-<a href="/logout">Kirjaudu ulos</a>
+<div class="container"> 
+  <nav class="navbar navbar-expand-sm navbar-light">
+    <a class="navbar-brand" href="#">Budjetointisovellus</a>
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/">Etusivu</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/logout">Kirjaudu ulos</a>
+      </li>
+    </ul>
+  </nav>
+</div>
 <hr>
 {% block content %}{% endblock %}
