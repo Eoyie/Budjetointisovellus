@@ -4,12 +4,24 @@
 {% extends "layout.html" %}
 {% block title %}Login{% endblock %}
 {% block content %}
-<form action="/login" method="POST">
-    <p>Tunnus:<br>
-    <input type="text" name="username" required></p>
-    <p>Salasana:<br>
-    <input type="password" name="password" required></p>
-    <input type="submit" value="Kirjaudu"><br>
-    <p><a href="/register">Rekisteröidy</a></p>
+<div class="container">
+    <div class="col-8">
+    <h2>Kirjaudu sisään</h2>
+    <hr>
+    <form action="/login" method="POST">
+        <div class="form-group col-6">
+            <p>
+                Tunnus:<br>
+            <input type="text" class="form-control" name="username" required>
+            </p>
+            <p>
+                Salasana:<br>
+            <input type="password" class="form-control" name="password" required>
+            </p>
+            <button type="submit" class="btn btn-primary">Kirjaudu</button><br>
+        </div>
     </form>
+    <hr>
+    </div>
+</div>
 {% endblock %}
