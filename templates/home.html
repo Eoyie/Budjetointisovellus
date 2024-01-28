@@ -3,82 +3,93 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 
 <style>
-.container {
+.flex_container {
     display: flex;
     flex-wrap: wrap;
 }
-.box {
-    float: left;
-    width: 800px;
-    margin-left: 10px;
-    margin-top: 10px;
-    padding: 5px;
-    border: 2px solid black;
+.flex_extra_space {
+    width: 180px;
+    height: 145px;
 }
-.invisible_box {
-    float: left;
-    width: 220px;
-    margin-left: 10px;
-    margin-top: 10px;
-    padding: 5px;
-}
-.space { margin-top: 250px; }
+.space { margin-top: 40px; }
 </style>
 {% extends "layout_logged_in.html" %}
 {% block title %}Etusivu{% endblock %}
 {% block content %}
 {% if session.user_id %}
-<h3>Hei {{ message }}!</h3>
-<div class="box">
-    <div class="invisible_box">
-        <h3>Budjetti</h3>
-        {% if budget %}
-        Tämän kuun budjetti:{{ budget.amount }}
-        Jäljellä: {{ budget_remaining }} 
-        <ul>
-            <li><a href="/budgets">Muuta budjettia</a>
-        </ul>
-        {% else %}
-        <ul>
-            <li><a href="/budgets">Lisää budjetti</a>
-        </ul>
-        {% endif %}
-    </div>
-    <div class="invisible_box">
-        <h3>Hallinnoi menoja</h3>
-        <ul>
-            <li><a href="/new_expense">Lisää meno</a>
-        </ul>
-        <ul>
-            <li><a href="/view_expenses">Tutki menoja</a>
-        </ul>
-    </div>
-    <div class="invisible_box">
-        <h3>Hallinnoi tulevia menoja</h3>
-        <ul>
-            <li><a href="/new_future_expense">Lisää tuleva meno</a>
-        </ul>
-        <ul>
-            <li><a href="/view_future_expenses">Tutki tulevia menoja</a>
-        </ul>
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <h2>Oma etusivusi {{ message }}!</h2>
+            <hr>
+            {% if expenses_sum %}
+            <h3>Sinun menosi tässä kuussa kategorettain:</h3>
+            <br>
+                <div class="flex_container">
+                {% for expense in expenses %}
+                    <div class="flex_extra_space">
+                        <div style="text-align:center;
+                                    border-radius: 25px;
+                                    border: 2px solid #A9A9A9;
+                                    padding: 20px;
+                                    width: 175px;
+                                    height: 140px;">
+                            <b>{{ expense.name }}</b>
+                            <br>
+                            <hr>
+                            Mennyt: {{ expense.price }}
+                            <br>
+                        </div>
+                    </div>
+                {% endfor %}
+                </div>
+            <div class="space"></div>
+            <p>
+                Menojesi summa tässä kuussa: {{ expenses_sum }}
+            <hr>
+            {% endif %}
+        </div>
+        <div class="col-4">
+            <h3>Budjetti</h3>
+            <hr>
+            {% if budget %}
+            <p>
+                Tämän kuun budjetti: {{ budget.amount }}
+            <p>
+                Budjetista jäljellä: {{ budget_remaining }} 
+            <ul>
+                <li><a href="/budgets">Muuta budjettia</a>
+            </ul>
+            {% else %}
+            <ul>
+                <li><a href="/budgets">Lisää budjetti</a>
+            </ul>
+            {% endif %}
+            <h3>Hallinnoi kategorioitasi</h3>
+            <hr>
+            <ul>
+                <li><a href="/categories">Kategoriat</a>
+            </ul>
+            <h3>Hallinnoi menoja</h3>
+            <hr>
+            <ul>
+                <li><a href="/new_expense">Lisää meno</a>
+            </ul>
+            <ul>
+                <li><a href="/view_expenses">Tutki menoja</a>
+            </ul>
+            <h3>Hallinnoi tulevia menoja</h3>
+            <hr>
+            <ul>
+                <li><a href="/new_future_expense">Lisää tuleva meno</a>
+            </ul>
+            <ul>
+                <li><a href="/view_future_expenses">Tutki tulevia menoja</a>
+            </ul>
+        </div>
     </div>
 </div>
 <div class="space"></div>
-{% if expenses_sum %}
-<hr>
-<h3>Sinun menosi tässä kuussa:</h3><br>
-    <div class="container">
-    {% for expense in expenses %}
-        <div style="border:2px solid black;padding:10px;width:160px;
-                    text-align:center;">
-            <b>{{ expense.name }}</b><br><hr>
-            Mennyt: {{ expense.price }}<br>
-        </div>
-    {% endfor %}
-    </div>
-<br><hr>
-<h3>Menojesi summa tässä kuussa: {{ expenses_sum }}</h3>
-{% endif %}
 {% else %}
 Et ole kirjautunut sisään!
 {% endif %}{% endblock %}s
