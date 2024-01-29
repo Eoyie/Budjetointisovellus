@@ -1,49 +1,59 @@
 <!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-<style>
-    .invisible_box {
-    float: left;
-    width: 220px;
-    margin-left: 10px;
-    margin-top: 10px;
-    padding: 5px;
-}
-.space { margin-top: 250px; }
-</style>
 {% extends "layout_logged_in.html" %}
 {% block title %}Kategoriat{% endblock %}
 {% block content %}
 {% if session.user_id %}
-<div class="invisible_box">
-<h3>Lisää kategoria</h3><br>
-<form action="/categories" method="post" onsubmit="return check(this)">
-    Kategorian nimi: <input type="text" name="name" required>
-    <input type="submit" name="action" value="Lisää kategoria">
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-</form>
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <h3>Lisää kategoria</h3>
+            <hr>
+            <form action="/categories" method="post" onsubmit="return check(this)">
+                <div class="col-8">
+                    <p>
+                        Kategorian nimi: 
+                        <input type="text" class="form-control" name="name" required>
+                    <p>
+                    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+                    <button type="submit" class="btn btn-primary" name="action" value="Lisää kategoria">
+                        Lisää kategoria</button>
+                </div>
+            </form>
+            {% if categories %}
+            <hr>
+            <h3>Sinun kategoriat:</h3><br>
+            <ul>
+            {% for category in categories %}
+                <li>{{ category.name }}
+            {% endfor %}
+            </ul>
+            <hr>
+        </div>
+        <div class="col-4">
+            <h3>Poista kategoria</h3>
+            <hr>
+            <form action="/categories" method="post">
+                <div class="col-8">
+                    <p>
+                        Kategoria:
+                        <select name="category" class="form-control">
+                        {% for category in categories %}
+                        <option value="{{ category.id }}"> {{ category.name }}
+                        {% endfor %}
+                        </select>
+                    </p>
+                    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+                    <button type="submit" class="btn btn-primary" name="action" value="Poista kategoria">
+                        Poista kategoria</button>
+                </div>
+            </form>
+            <hr>
+            {% endif %}
+        </div>
+    </div>
 </div>
-{% if categories %}
-<div class="invisible_box">
-<h3>Poista kategoria</h3><br>
-<form action="/categories" method="post">
-    <p><select name="category">
-        {% for category in categories %}
-        <option value="{{ category.id }}"> {{ category.name }}
-        {% endfor %}
-        </select></p>
-    <input type="submit" name="action" value="Poista kategoria">
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-</form>
-</div>
-<div class="space"></div>
-<hr>
-<h3>Sinun kategoriat:</h3><br>
-<ul>
-{% for category in categories %}
-    <li>{{ category.name }}
-{% endfor %}
-</ul>
 <script>
     function check(form) {
         if (form.name.value.length > 13) {
@@ -53,4 +63,4 @@
         return true;
     }
 </script>
-{% endif %}{% endif %}{% endblock %}
+{% endif %}{% endblock %}
