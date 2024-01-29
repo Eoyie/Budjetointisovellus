@@ -4,5 +4,11 @@
 {% extends "layout_logged_in.html" %}
 {% block title %}Error{% endblock %}
 {% block content %}
-Virhe: {{ message }}
+<div class="container">
+    <div class="col-8">
+    <h2>Virhe:</h2>
+    <hr>
+    {{ message }}
+    </div>
+</div>
 {% endblock %}
