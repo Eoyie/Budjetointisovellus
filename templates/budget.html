@@ -2,40 +2,64 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <style>
-    .container {
-        display: flex;
-        flex-wrap: wrap;
-    }
+.flex_container {
+    display: flex;
+    flex-wrap: wrap;
+}
+.flex_extra_space {
+    width: 180px;
+    height: 195px;
+}
 </style>
 {% extends "layout_logged_in.html" %}
 {% block title %}Budjetti{% endblock %}
 {% block content %}
 {% if session.user_id %}
-<h3>Lisää tai muokkaa budjettia</h3><br>
-<form action="/budgets" method="post" onsubmit="return check(this)">
-    Budjetin määrä: <input type="text" name="budget" required>
-    Budjetointi kuukausi: <input type="month" name="month" required>
-    <input type="submit" value="Lisää budjetti">
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-</form>
-<hr>
-<h3>Sinun budjetit:</h3><br>
-<ul>
-    <div class="container">
-        {% for budget in budgets %}
-            <div style="border:2px solid black;padding:10px;width:100px;
-                        text-align:center;">
-                <b>{{ budget.month }}</b><br><hr>
-                {{ budget.amount }}<br><hr>
-                <form action="/delete_budget?id={{ budget.id }}"
-                 method="POST">
-                    <input type="submit" value="Poista">
-                    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-                </form>
+<div class="container"> 
+    <div class="col-8">
+        <h3>Lisää uusi budjetti tai päivitä</h3>
+        <hr>
+        <form action="/budgets" method="post" onsubmit="return check(this)">
+            <div class="form-group col-6">
+                <p>
+                    Budjetin määrä: 
+                    <input type="text" class="form-control" name="budget" required>
+                <p>
+                    Budjetointi kuukausi: 
+                    <input type="month" class="form-control" name="month" required>
+                <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+                <p>
+                    <button type="submit" class="btn btn-primary">Lisää budjetti</button>
             </div>
-        {% endfor %}
-        </div>
-
+        </form>
+        <hr>
+        <h3>Sinun budjetit:</h3><br>
+        <ul>
+            <div class="flex_container">
+                {% for budget in budgets %}
+                <div class="flex_extra_space">
+                    <div style="text-align:center;
+                            border-radius: 25px;
+                            border: 2px solid #A9A9A9;
+                            padding: 20px;
+                            width: 175px;
+                            height: 190px;">
+                        <b>{{ budget.month }}</b>
+                        <br>
+                        <hr>
+                        {{ budget.amount }}<br>
+                        <hr>
+                        <form action="/delete_budget?id={{ budget.id }}" method="POST">
+                            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+                            <button type="submit" class="btn btn-primary">Poista</button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <hr>
+    </div>
+</div>
 <script>
     function check(form) {
         if (form.budget.value.length > 10) {
