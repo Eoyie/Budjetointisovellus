@@ -30,7 +30,7 @@ def index():
 def login():
     if session.get("logged_in"):
         return render_template("error_logged_in.html",
-                                message="Olet jo kirjautunut sisään.")
+                                message="Olet jo kirjautunut sisään")
     if request.method == "GET":
         return render_template("login.html")
     if request.method == "POST":
@@ -62,7 +62,7 @@ def register():
         if not users.check_valid_username(username):
             return render_template("error.html",
                                    message="Käyttäjänimen tulee sisältää vain\
-                                    aakkosia.")
+                                    aakkosia")
         if not users.check_register_passwords(password1, password2):
             return render_template("error.html", message="Salasanat eroavat")
         if not users.check_if_username_free(username):
@@ -97,7 +97,7 @@ def new_expense():
         if not expenses.check_price(price):
             return render_template("error_logged_in.html",
                                 message="Menon hinta tulee olla positiivinen\
-                                        kokonaisluku.")
+                                        kokonaisluku")
         if expenses.add_expense(price, category_id, date, notes, user_id):
             return redirect("/")
         return render_template("error_logged_in.html",
@@ -288,7 +288,7 @@ def new_moved_expense():
     if not expenses.check_price(price):
         return render_template("error_logged_in.html",
                             message="Menon hinta tulee olla positiivinen\
-                                    kokonaisluku.")
+                                    kokonaisluku")
     future_expenses.delete_from_view(user_id, old_future_expense_id)
     if expenses.add_expense(price, category_id, date, notes, user_id):
         return redirect("/view_expenses")

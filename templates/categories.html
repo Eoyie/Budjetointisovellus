@@ -7,11 +7,11 @@
 {% if session.user_id %}
 <div class="container">
     <div class="row">
-        <div class="col-6">
+        <div class="col-8">
             <h3>Lisää kategoria</h3>
             <hr>
             <form action="/categories" method="post" onsubmit="return check(this)">
-                <div class="col-8">
+                <div class="col-6">
                     <p>
                         Kategorian nimi: 
                         <input type="text" class="form-control" name="name" required>
