@@ -2,39 +2,49 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 {% extends "layout_logged_in.html" %}
-{% block title %}Expences{% endblock %}
+{% block title %}Future expences{% endblock %}
 {% block content %}
 {% if session.user_id %}
-<form action="/new_future_expense" method="post" onsubmit="return check(this)">
-    <p>Menon hinta:<br>
-    <input type="text" name="price" required></p>
-    Kategoria:
-    <p><select name="category">
-    {% for category in categories %}
-    <option value="{{ category.id }}"> {{ category.name }}
-    {% endfor %}
-    </select></p>
-    <p>Lisätietoja:<br>
-    <textarea name="notes" rows="3" cols="40"></textarea></p>
-    <input type="submit" value="Lähetä">
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-    </form>
-    <script>
-        function check(form) {
-            if (form.price.value.length > 10) {
-                alert("Hinta on liian suuri");
-                return false;
-            }
-            if (form.notes.value.length > 100) {
-                alert("Lisätiedot on liian pitkä");
-                return false;
-            }
-            if (isNaN(form.price.value)) {
-                alert("Annettu hinta ei ole numero");
-                return false;
-            }
-            return true;
+<div class="container"> 
+    <div class="col-8">
+        <h3>Lisää uusi tuleva meno</h3>
+        <hr>
+        <div class="col-6">
+            <form action="/new_future_expense" method="post" onsubmit="return check(this)">
+                <p>Menon hinta:<br>
+                <input type="text" class="form-control" name="price" required></p>
+                Kategoria:
+                <p><select name="category" class="form-control">
+                {% for category in categories %}
+                <option value="{{ category.id }}"> {{ category.name }}
+                {% endfor %}
+                </select></p>
+                <p>Lisätietoja:<br>
+                <textarea name="notes" class="form-control" rows="3" cols="40"></textarea></p>
+                <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+                <p>
+                    <button type="submit" class="btn btn-primary">Lähetä</button>
+            </form>
+        </div>
+        <hr>
+    </div>
+</div>
+<script>
+    function check(form) {
+        if (form.price.value.length > 10) {
+            alert("Hinta on liian suuri");
+            return false;
         }
-    </script>
+        if (form.notes.value.length > 100) {
+            alert("Lisätiedot on liian pitkä");
+            return false;
+        }
+        if (isNaN(form.price.value)) {
+            alert("Annettu hinta ei ole numero");
+            return false;
+        }
+        return true;
+    }
+</script>
 {% endif %}
 {% endblock %}
