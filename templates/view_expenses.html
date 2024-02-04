@@ -20,7 +20,7 @@ tr:nth-child(even) {
 {% if session.user_id %}
 <div class="container"> 
    <div class="col-12">
-      <h2>Sinun menosi:</h2>
+      <h3>Sinun menosi:</h3>
       <hr>
       <div class="col-3">
          {% if month %}
@@ -53,14 +53,15 @@ tr:nth-child(even) {
          <td>
             <form action="/delete_expense?id={{ expense.id }}"
             method="POST">
-            <button type="submit" class="btn btn-primary">Poista</button>
-            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-            <input type="hidden" name="month" value="{{ month }}">
-            <input type="hidden" name="date" value="{{ expense.date }}"></form></td>
-         <td>{{ expense.name }}</td>
-         <td>{{ expense.price }}</td>
-         <td>{{ expense.date }}</td>
-         <td>{{ expense.notes }}</td>
+               <button type="submit" class="btn btn-primary">Poista</button>
+               <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+               <input type="hidden" name="month" value="{{ month }}">
+               <input type="hidden" name="date" value="{{ expense.date }}">
+            </form></td>
+            <td>{{ expense.name }}</td>
+            <td>{{ expense.price }}</td>
+            <td>{{ expense.date }}</td>
+            <td>{{ expense.notes }}</td>
          </tr>
          {% endfor %}
          </tbody>
