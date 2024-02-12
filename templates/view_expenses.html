@@ -36,36 +36,38 @@ tr:nth-child(even) {
          </form>
       </div>
       <hr>
-      <table class="table">
-         <thead>
+      <div class="table-responsive">
+         <table class="table">
+            <thead>
+               <tr>
+                  <th scope="col" style="width:10%"></th>
+                  <th scope="col">Kategoria</th>
+                  <th scope="col">Menon hinta</th>
+                  <th scope="col">Päivämäärä</th>
+                  <th scope="col">Lisätietoja</th>
+               </tr>
+            </thead>
+            <tbody>
+         {% if expenses %}
+         {% for expense in expenses %}
             <tr>
-               <th scope="col"></th>
-               <th scope="col">Kategoria</th>
-               <th scope="col">Menon hinta</th>
-               <th scope="col">Päivämäärä</th>
-               <th scope="col">Lisätietoja</th>
+            <td>
+               <form action="/delete_expense?id={{ expense.id }}"
+               method="POST">
+                  <button type="submit" class="btn btn-primary">Poista</button>
+                  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+                  <input type="hidden" name="month" value="{{ month }}">
+                  <input type="hidden" name="date" value="{{ expense.date }}">
+               </form></td>
+               <td>{{ expense.name }}</td>
+               <td>{{ expense.price }}</td>
+               <td>{{ expense.date }}</td>
+               <td>{{ expense.notes }}</td>
             </tr>
-         </thead>
-         <tbody>
-      {% if expenses %}
-      {% for expense in expenses %}
-         <tr>
-         <td>
-            <form action="/delete_expense?id={{ expense.id }}"
-            method="POST">
-               <button type="submit" class="btn btn-primary">Poista</button>
-               <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-               <input type="hidden" name="month" value="{{ month }}">
-               <input type="hidden" name="date" value="{{ expense.date }}">
-            </form></td>
-            <td>{{ expense.name }}</td>
-            <td>{{ expense.price }}</td>
-            <td>{{ expense.date }}</td>
-            <td>{{ expense.notes }}</td>
-         </tr>
-         {% endfor %}
-         </tbody>
-      </table>
+            {% endfor %}
+            </tbody>
+         </table>
+      </div>
       <hr>
    </div>
 </div>
