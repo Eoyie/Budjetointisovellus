@@ -1,32 +1,33 @@
 # Budjetointisovellus
 
-### HOX
+## Lyhyesti sovelluksesta
+Tässä sovelluksessa pystyt hallinnoimaan budjettiasi lisäämällä omia seurattavia menoja eri kategorioihin. Kyseiset kategoriat pystyt luoda vapaasti itse, riippuen siitä mitä menoja haluat sovelluksessa seurata. Voit lisäksi lisätä sekä normaaleja menoja, että tulevia menoja, jotka eivät vaikuta suoraan budjeteihin.
 
-Vielä varmuuden vuoksi kirjoitan tänne, että olen tekemässä loppupalautuksen kurssin vastuuhenkilölle myöhemmin, eikä jonkun muun ohjaajan siis tarvitse arvioida sovellusta (jos viesti labtoolissa ei mennyt perille!)
+### Ominaisuuksia
+- Kirjautuminen
+  - Käyttäjä voi luoda itselleen uuden käyttäjän
+  - Käyttäjä voi kirjautua sisään ja pois sovelluksesta
+- Kotisivu
+  - Käyttäjä voi kotisivullaan nähdä yhteenvedon kuluvan kuukauden menoista kategoreittain
+  - Käyttäjä voi kotisivullaan nähdä yhteenvedon kuluvan kuukauden menojen summan ja vaikutuksen asetettuun budjettiin
+- Budjetti
+  - Käyttäjä voi asettaa budjetin eri kuukausille
+  - Käyttäjä voi päivittää tai poistaa budjetin
+- Kategoria
+  - Käyttäjä voi luoda ja poistaa kategorioita
+- Menot
+  - Käyttäjä voi lisätä uusia menoja hinnan, päivämäärän, kategorian ja lisätietojen avulla
+  - Käyttäjä voi nähdä listan kaikista menoista
+  - Käyttäjä voi nähdä listan yksittäisten kuukausien menoista
+  - Käyttäjä voi poistaa menon
+- Tulevat menot
+  - Käyttäjä voi lisätä uusia tulevia menoja hinnan, kategorian ja lisätietojen avulla
+  - Käyttäjä voi nähdä listan kaikista tulevista menoista
+  - Käyttäjä voi siirtää tulevan menon menneeksi ja antaa tälle päivämäärän
+    -  Käyttäjä voi menoa siirtäessä päivittää kaikkia tietoja paitsi kategoriaa
+  - Käyttäjä voi poistaa tulevan menon
 
-
-
-### Välipalautus 3
-
-## Sovelluksen nykyinen tilanne
-Sovelluksessa pitäisi toimia:
-- Käyttäjän luominen ja kirjautuminen
-- Kategorioiden lisäys ja poisto (jos poistat kategorian, myös kaikki sen menot poistuvat)
-- Budjettien lisäys ja poisto (jos lisäät samalle kuulle budjetteja, niin updeittaa eli muokkaa. Lisätiedot eivät näy missään vielä!)
-- Menojen lisäys ja poisto
-- Listaukset budjeteista, kategorioista ja menoista
-- Yhteenveto kuun budjetista ja menoista.
- 
- Mitä pitää vielä viimeistellä:
- - Lisätään vielä tietokanta future_expenses (eli tulee 5 tietokantaa!!).
- - Ulkonäkö yleisesti paremmaksi (Varsinkin menojen listaus!!)
- - Budjettejen lisätiedot nähtäviin (tai pois).
- - Lisää sääntöjä esim. salasanan luomiseen, nyt vain pituus rajoja!
- - Kategorioiden samojen nimien käsittely!
- - Yleistä koodin siivousta ym.
- - Automaattinen uloskirjatuminen? (Koska nyt jos on kirjautunut sisään ja poistaa kaikki tietokannat ja luo ne uudestaan, niin ei toimi ellei kirjoita manuaalisesti /logout...)
-
-## Miten pystyy käynnistää
+## Miten sovelluksen pystyy käynnistää
 **Sovellus ei ole testattavissa Fly.iossa!**
 Tässä on siis ohjeet sovelluksen käynnistämiseen paikallisesti:
 
@@ -67,19 +68,4 @@ Nyt voit käynnistää sovelluksen komennolla ja avata annetun linkin, josta pä
 ```
 $ flask run
 ```
-##
-### Välipalautus 1
 
-En ole vielä täysin varma tarkasta laajuudesta, mutta pääideana olisi tehdä sovellus omien tehtyjen ja mahdollisesti tulevien ostoksien budjetoinnista. Tämä tulisi olla yleisesti mukavampi ja interaktiivisempi, kuin ns. perinteinen excel-taulukko, jota usein käytetään budjetointiin. Siis vielä enemmän idea on erotella ns. turhia, pakollisia ja hupi ostoksia vain yksinkertaisen "mihin meni rahaa" sijaan.
-
-## Tässä yleisiä idoita sovelluksen toimivuudesta:
-
-Sovelluksessa näkyy käyttäjän ostoksia ja tulevia ostosuunnitelmia, joista löytyy tarkempia tietoja menojen tärkeydestä ja tarkoituksesta. Jokainen käyttäjä on peruskäyttäjä tai ylläpitäjä.
-- Käyttäjä voi kirjautua sisään ja ulos, sekä luoda uuden käyttäjän **##DONE##**
-- Käyttäjä voi päättää mitä budjetoinnin alueita hän käyttää ja mitä ei (Esim. jos ei ole autoa, tähän liittyvää osuutta ei ole aina turhaan näkyvillä). Voi siis esim. käyttää ainoastaan ruokaostoksien tai ns. "ylimääräisten" ostoksien seuraamiseen.  **##DONE?##**
-- Käyttäjä voi laittaa tietoja ostoksistaan yksityiskohtaisia tietoja ja lisätä myös myöhemmin kommentteja näihin liittyen. Voi tehdä näistä myös toistuvia (esim. vuokraa ei tarvitse aina lisätä uudestaan) **##VAIN NOTES MUUT LUULTAVASTI EI TEHDÄ##**
-- Käyttäjä voi myös tehdä kirjauksia asioista, mitä saatetaan ostaa tulevaisuudessa. Olkoon esim. lahjoja, "ylimääräistä" hauskaa tai tarpeellisia asioita. Ja nähdä miten nämä vaikuttaisivat tulevan ajan budjetointiin tai voi myös olla vain "idea" ilman mitään vaikutusta. **##TODO##**
-- Käyttäjä voi nähdä näistä kaikista asioista jonkinlaisen yhteenvedon.  **##DONE?##**
-- Käyttäjä voi helposti etsiä ja muokata tehtyjä kirjauksia.  **##CHANGED##**
-
-Ylläpitäjän rooli on vielä hieman auki, sillä en ole varma kuinka paljon käyttäjän tiedoista on salattua. Käyttäjälle kokemus on sinäänsä hyvin yksityinen, joten seuranta ei ole kovin tarpeellista. Ehkä, jos kaksi käyttäjää voivat jotenkin olla vuorovaikutuksessa esim. yhdistää budjetteja niin tällöin, kyllä. Budjetoinnissa ei sinäänsä voi tehdä paljoa "väärin", johon ylläpitäjän pitäisi puuttua. Asia on vielä pohdinnan alla siis.. **##SAATTAA JÄÄDÄ POIS##**
